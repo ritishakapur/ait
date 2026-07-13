@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GenAI Readiness Assessment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --p400: #3168D7;
+      --p500: #032C70;
+      --p600: #03255F;
+      --p700: #021F4E;
+      --s100: #FFF4D9;
+      --s400: #FFCC4D;
+      --s500: #FFB600;
+      --s600: #D89B00;
+      --n50: #F7F7F7;
+      --n100: #EEEEEE;
+      --n200: #DEDEDE;
+      --n300: #C4C4C4;
+      --n500: #7D7D7D;
+      --n600: #5C5C5C;
+      --n700: #424242;
+      --n900: #1A1A1A;
+      --a-green: #009A46;
+
+      --bg: #FBF6EC;
+      --card: #FBF6EC;
+      --ink: var(--n900);
+      --ink-mid: var(--n700);
+      --muted: var(--n500);
+      --border: var(--n200);
+      --accent: var(--p500);
+      --accent-light: #EBEEF4;
+      --gold: var(--s500);
+      --gold-bg: var(--s100);
+      --radius: 16px;
+      --shadow: 0 4px 32px rgba(3, 44, 112, 0.10);
+      --font-head: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-body: 'Open Sans', -apple-system, sans-serif;
+    }
+
+    html,
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: var(--font-body);
+      color: var(--ink);
+    }
+
+    .shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 10%, rgba(49, 104, 215, 0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 90%, rgba(255, 182, 0, 0.06) 0%, transparent 55%),
+        var(--bg);
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 980px;
+      overflow: hidden;
+    }
+
+    /* ── PROGRESS ── */
+    .progress-wrap {
+      height: 4px;
+      background: var(--border);
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: var(--accent);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── SCREENS ── */
+    .screen {
+      display: none;
+      padding: 48px 48px 40px;
+      animation: fadeSlide 0.4s ease forwards;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideOutLeft {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateX(-48px);
+      }
+    }
+
+    @keyframes slideInFromRight {
+      from {
+        opacity: 0;
+        transform: translateX(48px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideOutRight {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateX(48px);
+      }
+    }
+
+    @keyframes slideInFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-48px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ── INTRO ── */
+    #screen-intro {
+      padding: 0;
+    }
+
+    .intro-header {
+      background: linear-gradient(145deg, var(--p700) 0%, var(--p500) 55%, #0a3d8f 100%);
+      padding: 48px 52px 44px;
+      color: #fff;
+    }
+
+    .intro-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--s400);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .intro-eyebrow::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: var(--s400);
+      flex-shrink: 0;
+    }
+
+    .intro-title {
+      font-family: var(--font-head);
+      font-size: 36px;
+      line-height: 1.15;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0;
+      letter-spacing: -0.3px;
+    }
+
+    .intro-body-wrap {
+      padding: 36px 52px 44px;
+      background: var(--bg);
+      border-top: 2px solid var(--s400);
+    }
+
+    .intro-body {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--n700);
+      margin-bottom: 28px;
+      font-weight: 400;
+    }
+
+    .intro-meta {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .meta-dot { display: none; }
+
+    .intro-body-wrap .meta-item {
+      background: var(--s100);
+      border: 1px solid var(--s400);
+      color: var(--p500);
+      font-weight: 600;
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+
+    /* ── QUESTION ── */
+    .q-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #B38000;
+      margin-bottom: 12px;
+    }
+
+    .q-text {
+      font-family: var(--font-head);
+      font-size: 26px;
+      line-height: 1.25;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: -0.2px;
+    }
+
+    .q-hint {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    /* ── OPTIONS ── */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .opt {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px 20px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      user-select: none;
+      background: var(--card);
+    }
+
+    .opt:hover { border-color: var(--s500); background: #FFFCF0; }
+
+    .opt.selected {
+      border-color: var(--s500);
+      background: var(--s100);
+      color: var(--p500);
+    }
+
+    .opt.selected .opt-marker { border-color: var(--s500); background: transparent; }
+
+    .opt.selected .opt-marker::after { opacity: 1; background: var(--s600); border-radius: 50%; }
+
+    .opt-marker {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s ease;
+      position: relative;
+    }
+
+    .opt-marker::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0;
+      transition: opacity 0.18s;
+    }
+
+    .opt-text {
+      font-size: 15px;
+      line-height: 1.45;
+      flex: 1;
+      font-weight: 400;
+    }
+
+    /* free-text field for "Something else" */
+    .other-input-wrap {
+      margin-top: 10px;
+      display: none;
+    }
+
+    .other-input-wrap.visible {
+      display: block;
+    }
+
+    .other-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--p400);
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--ink);
+      outline: none;
+      background: var(--accent-light);
+      transition: border-color 0.15s;
+    }
+
+    .other-input:focus {
+      border-color: var(--accent);
+    }
+
+    /* ── NAV ── */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-back {
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 10px 0;
+      font-family: var(--font-body);
+      transition: color 0.15s;
+    }
+
+    .nav-back:hover {
+      color: var(--ink);
+    }
+
+    .nav-back:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: var(--font-body);
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--p600);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      background: var(--border);
+      color: var(--muted);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent-light);
+    }
+
+    /* ── RESULTS ── */
+    .result-header {
+      background: linear-gradient(145deg, var(--p700) 0%, var(--p500) 55%, #0a3d8f 100%);
+      padding: 52px 52px 48px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-header::before {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -60px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(49, 104, 215, 0.25) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .result-header::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-header { animation: fadeInUp 0.5s ease forwards; }
+    .result-body   { animation: fadeInUp 0.5s ease 0.12s both; }
+    .result-cta    { animation: fadeInUp 0.5s ease 0.24s both; }
+
+    .result-stage-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--s400);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .result-stage-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 2px;
+      background: var(--s400);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .result-stage {
+      font-family: var(--font-head);
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+
+    .result-headline {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.75);
+      max-width: 500px;
+      font-weight: 300;
+    }
+
+    .score-wrap {
+      margin-top: 28px;
+    }
+
+    .score-track {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .score-fill {
+      height: 8px;
+      background: var(--gold);
+      border-radius: 100px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    }
+
+    .score-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .result-body {
+      padding: 44px 52px 48px;
+      border-top: 1px solid var(--n100);
+    }
+
+    #result-copy p {
+      margin-bottom: 18px;
+      line-height: 1.85;
+    }
+
+    #result-copy p:last-child { margin-bottom: 0; }
+
+    #result-copy strong {
+      font-weight: 700;
+      color: var(--p500);
+    }
+
+    .result-reflection {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--ink-mid);
+      margin-bottom: 36px;
+      padding: 24px;
+      background: var(--gold-bg);
+      border-radius: 12px;
+      border-left: 3px solid var(--gold);
+      font-style: italic;
+    }
+
+    .result-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #B38000;
+      margin-bottom: 16px;
+    }
+
+    .recs {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .rec {
+      display: flex;
+      gap: 16px;
+      padding: 18px 20px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      align-items: flex-start;
+    }
+
+    .rec-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .rec-content {
+      flex: 1;
+    }
+
+    .rec-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+
+    .rec-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .result-cta {
+      background: linear-gradient(135deg, var(--p700) 0%, var(--p500) 60%, #0e3fa3 100%);
+      border-radius: 14px;
+      padding: 32px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--s400), rgba(255,204,77,0.25));
+    }
+
+    .result-cta::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #fff;
+      font-family: var(--font-head);
+      letter-spacing: -0.2px;
+    }
+
+    .cta-desc {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.62);
+      line-height: 1.65;
+      max-width: 360px;
+    }
+
+    .result-cta .btn-primary {
+      background: var(--s400);
+      color: var(--p700);
+      font-weight: 700;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .result-cta .btn-primary:hover {
+      background: var(--s500);
+      transform: translateY(-1px);
+    }
+
+    .result-cta .btn-primary:hover {
+      background: var(--s400);
+      border-color: var(--s400);
+    }
+
+    .stages-row {
+      display: flex;
+      gap: 4px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stage-chip {
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.5);
+      transition: all 0.3s;
+    }
+
+    .stage-chip.active {
+      background: var(--gold);
+      color: var(--p700);
+      font-weight: 800;
+    }
+
+    .profile-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .profile-pill {
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.10);
+      color: rgba(255, 255, 255, 0.90);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      letter-spacing: 0.02em;
+    }
+
+    #result-headline {
+      font-size: clamp(22px, 3.5vw, 36px);
+    }
+
+    .result-subline {
+      font-size: 15px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.65);
+      font-weight: 300;
+      margin-top: 12px;
+      max-width: 520px;
+      display: none;
+    }
+
+    #result-copy {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--n700);
+      margin-bottom: 0;
+      padding: 0;
+      background: none;
+      border: none;
+      font-style: normal;
+    }
+
+    .result-hook {
+      font-size: 19px;
+      font-style: italic;
+      color: var(--p500);
+      margin: 40px 0;
+      padding: 6px 0 6px 24px;
+      border-left: 1.5px solid var(--s400);
+      line-height: 1.55;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    .brand-footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .brand-footer a {
+      color: var(--p400);
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .screen {
+        padding: 32px 24px 28px;
+      }
+
+      .result-header {
+        padding: 36px 24px 32px;
+      }
+
+      .result-body {
+        padding: 28px 24px;
+      }
+
+      .intro-title {
+        font-size: 28px;
+      }
+
+      .q-text {
+        font-size: 20px;
+      }
+
+      .result-stage {
+        font-size: 30px;
+      }
+
+      .result-cta {
+        flex-direction: column;
+      }
+
+      .intro-meta {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <div class="card">
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar" style="width:0%"></div>
+      </div>
+
+      <!-- ══ INTRO ══ -->
+      <div class="screen active" id="screen-intro">
+        <div class="intro-header">
+          <div class="intro-eyebrow">GenAI Readiness</div>
+          <h1 class="intro-title">Is your organisation ready for AI?</h1>
+        </div>
+        <div class="intro-body-wrap">
+          <p class="intro-body">
+            Six questions to understand where you are, who you serve, and what's really getting in the way. You'll leave
+            with a clear picture and personalised next steps.
+          </p>
+          <div class="intro-meta">
+            <div class="meta-item"><span class="meta-dot"></span> 6 questions</div>
+            <div class="meta-item"><span class="meta-dot"></span> ~4 minutes</div>
+            <div class="meta-item"><span class="meta-dot"></span> Personalised results</div>
+          </div>
+          <button class="btn btn-primary" onclick="startAssessment()">Begin →</button>
+        </div>
+      </div>
+
+      <!-- ══ QUESTIONS ══ -->
+      <div class="screen" id="screen-q"></div>
+
+      <!-- ══ RESULTS ══ -->
+      <div id="screen-results" style="display:none; animation: fadeSlide 0.5s ease forwards;">
+        <div class="result-header" id="result-header">
+          <div class="result-stage-label">YOUR BLIND SPOT</div>
+          <div class="profile-pills" id="profile-pills"></div>
+          <div class="result-stage" id="result-headline"></div>
+          <div class="result-subline" id="result-subline"></div>
+        </div>
+        <div class="result-body">
+          <div id="result-copy"></div>
+          <div class="result-hook" id="result-hook"></div>
+          <div class="result-cta">
+            <div class="cta-text">
+              <div class="cta-title">Ready to close this gap?</div>
+              <div class="cta-desc" id="cta-desc"></div>
+            </div>
+            <button class="btn btn-primary">Let's talk →</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="brand-footer">Blind spot detection by <a href="#">AI Transformation Org</a></div>
+  </div>
+
+  <script>
+    // ══════════════════════════════════════════
+    //  DATA
+    // ══════════════════════════════════════════
+
+    const questions = [
+      {
+        id: "q1",
+        label: "Question 1 of 6 — Your role",
+        text: "Which of these sounds most like your seat at the table?",
+        hint: "",
+        type: "single-with-other",
+        options: [
+          { text: "Growth Strategist: finding the next big opportunity" },
+          { text: "AI Growth Strategist: figuring out where AI fits into growth" },
+          { text: "Founder's Office: close to leadership, working on strategic bets" },
+          { text: "Head of Strategic Initiatives: owning the cross-functional stuff that needs new thinking" },
+          { text: "Something else", isOther: true }
+        ]
+      },
+      {
+        id: "q2",
+        label: "Question 2 of 6 — Your sector",
+        text: "What sector do you operate in?",
+        hint: "",
+        type: "single",
+        options: [
+          { text: "Building materials & construction" },
+          { text: "Automotive & mobility" },
+          { text: "Agri-inputs & food" },
+          { text: "Industrial goods & machinery" },
+          { text: "Consumer goods & retail" },
+          { text: "Healthcare & pharma" },
+          { text: "Energy & infrastructure" }
+        ]
+      },
+      {
+        id: "q3",
+        label: "Question 3 of 6 — Your key person",
+        text: "Who in your value chain has the most influence over what the end customer says?",
+        hint: "",
+        type: "single",
+        options: [
+          { text: "Sellers: dealers, distributors, agents" },
+          { text: "Recommenders: architects, doctors, consultants" },
+          { text: "Installer: electricians, masons, fabricators" },
+          { text: "Fixer: servicers, aftermarket" }
+        ]
+      },
+      {
+        id: "q4",
+        label: "Question 4 of 6 — Value levers",
+        text: "Across these four value levers, where is your organisation leaving the most on the table?",
+        hint: "",
+        type: "single-with-other",
+        options: [
+          { text: "Winning more customers and growing revenue" },
+          { text: "Cutting costs and reducing waste" },
+          { text: "Moving faster with shorter cycle times" },
+          { text: "Making the change actually stick" },
+          { text: "Other", isOther: true, placeholder: "Tell us more..." }
+        ]
+      },
+      {
+        id: "q5",
+        label: "Question 5 of 6 — Root cause",
+        text: "If you fixed that tomorrow what would happen to the problem? Would the problem actually be gone, or would it just show up somewhere else?",
+        hint: "",
+        type: "single",
+        options: [
+          { text: "It would disappear" },
+          { text: "It would probably shift somewhere else" },
+          { text: "Unsure" }
+        ]
+      },
+      {
+        id: "q7",
+        label: "Question 6 of 6 — Your commitment",
+        text: "If this works, what kind of commitment are you ready to make?",
+        hint: "",
+        type: "single",
+        options: [
+          { text: "A 90-day pilot" },
+          { text: "A year-long rollout" },
+          { text: "A 2-3 year transformation" }
+        ]
+      }
+    ];
+
+    // ══════════════════════════════════════════
+    //  STAGES (placeholder — results logic TBD)
+    // ══════════════════════════════════════════
+
+    const stages = [
+      { name: "Exploring", min: 0, max: 2, headline: "You're at the beginning of something important." },
+      { name: "Evaluating", min: 3, max: 4, headline: "You're asking the right questions — now it's about acting on them." },
+      { name: "Experimenting", min: 5, max: 5, headline: "You have the foundation. Time to run a real test." },
+      { name: "Expanding", min: 6, max: 7, headline: "You're in motion. Now it's about scaling what works." }
+    ];
+
+    // ══════════════════════════════════════════
+    //  STATE
+    // ══════════════════════════════════════════
+
+    let current = 0;
+    const answers = {};   // { q1: [idx], q2: [idx], ... }
+    const otherText = {}; // { q1: "freetext value" }
+
+    // ══════════════════════════════════════════
+    //  RENDER
+    // ══════════════════════════════════════════
+
+    function startAssessment() {
+      document.getElementById('screen-intro').classList.remove('active');
+      current = 0;
+      renderQuestion(0);
+      const container = document.getElementById('screen-q');
+      container.style.animation = 'none';
+      void container.offsetWidth;
+      container.style.animation = 'fadeSlide 0.4s ease forwards';
+      updateProgress();
+    }
+
+    function renderQuestion(idx) {
+      const q = questions[idx];
+      const sel = answers[q.id] || [];
+      const isWithOther = q.type === 'single-with-other';
+
+      const optsHtml = q.options.map((opt, i) => {
+        const isSelected = sel.includes(i);
+        return `
+      <div class="opt ${isSelected ? 'selected' : ''}"
+           onclick="selectOption(${idx}, ${i})">
+        <div class="opt-marker"></div>
+        <span class="opt-text">${opt.text}</span>
+      </div>`;
+      }).join('');
+
+      const otherOpt = isWithOther ? q.options.find(o => o.isOther) : null;
+      const otherPlaceholder = (otherOpt && otherOpt.placeholder) ? otherOpt.placeholder : 'Tell us more...';
+      const otherWrapClass = (isWithOther && sel.includes(q.options.length - 1)) ? 'visible' : '';
+      const otherHtml = isWithOther ? `
+    <div class="other-input-wrap ${otherWrapClass}" id="other-wrap-${idx}">
+      <input class="other-input" type="text" placeholder="${otherPlaceholder}"
+        value="${otherText[q.id] || ''}"
+        oninput="saveOtherText(${idx}, this.value)"
+        id="other-input-${idx}" />
+    </div>` : '';
+
+      const canNext = sel.length > 0;
+      const isLast = idx === questions.length - 1;
+
+      const html = `
+    <div class="q-label">${q.label}</div>
+    <div class="q-text">${q.text}</div>
+    ${q.hint ? `<div class="q-hint">${q.hint}</div>` : ''}
+    <div class="options">${optsHtml}</div>
+    ${otherHtml}
+    <div class="nav">
+      <button class="nav-back" onclick="goBack()" ${idx === 0 ? 'disabled' : ''}>← Back</button>
+      <button class="btn btn-primary" id="nextBtn"
+        onclick="${isLast ? 'showResults()' : 'goNext()'}"
+        ${canNext ? '' : 'disabled'}>
+        ${isLast ? 'See my results →' : 'Continue →'}
+      </button>
+    </div>`;
+
+      const container = document.getElementById('screen-q');
+      container.innerHTML = html;
+      container.classList.add('active');
+    }
+
+    function saveOtherText(qIdx, val) {
+      const q = questions[qIdx];
+      otherText[q.id] = val;
+    }
+
+    function transitionToQuestion(newIdx, direction) {
+      const container = document.getElementById('screen-q');
+      container.style.animation = direction === 'forward'
+        ? 'slideOutLeft 0.32s ease forwards'
+        : 'slideOutRight 0.32s ease forwards';
+
+      setTimeout(() => {
+        // suppress the .screen.active CSS animation before rebuilding DOM
+        container.style.animation = 'none';
+        container.style.opacity = '0';
+        current = newIdx;
+        renderQuestion(current);
+        updateProgress();
+        void container.offsetWidth; // force reflow
+        container.style.opacity = '';
+        container.style.animation = direction === 'forward'
+          ? 'slideInFromRight 0.38s ease forwards'
+          : 'slideInFromLeft 0.38s ease forwards';
+        setTimeout(() => { container.style.animation = 'none'; }, 400);
+      }, 320);
+    }
+
+    function selectOption(qIdx, optIdx) {
+      const q = questions[qIdx];
+      if (!answers[q.id]) answers[q.id] = [];
+
+      answers[q.id] = [optIdx];
+
+      // Update DOM
+      document.querySelectorAll('#screen-q .opt').forEach((el, i) => {
+        el.classList.toggle('selected', i === optIdx);
+      });
+
+      // Show/hide "other" text field
+      if (q.type === 'single-with-other') {
+        const wrap = document.getElementById(`other-wrap-${qIdx}`);
+        const isOtherOpt = !!(q.options[optIdx] && q.options[optIdx].isOther);
+        if (wrap) {
+          wrap.classList.toggle('visible', isOtherOpt);
+          if (isOtherOpt) {
+            setTimeout(() => { const inp = document.getElementById(`other-input-${qIdx}`); if (inp) inp.focus(); }, 50);
+          }
+        }
+      }
+
+      // Enable next button
+      const nextBtn = document.getElementById('nextBtn');
+      if (nextBtn) nextBtn.disabled = false;
+
+      // Auto-advance for non-other or when other is already filled
+      const isOtherSelected = q.type === 'single-with-other' && q.options[optIdx] && q.options[optIdx].isOther;
+      if (!isOtherSelected) {
+        setTimeout(() => {
+          if (qIdx < questions.length - 1) transitionToQuestion(qIdx + 1, 'forward');
+          else showResults();
+        }, 480);
+      }
+    }
+
+    function goNext() {
+      const q = questions[current];
+      if (!answers[q.id] || answers[q.id].length === 0) return;
+      transitionToQuestion(current + 1, 'forward');
+    }
+
+    function goBack() {
+      if (current === 0) return;
+      transitionToQuestion(current - 1, 'backward');
+    }
+
+    function updateProgress() {
+      const pct = (current / questions.length) * 100;
+      document.getElementById('progressBar').style.width = pct + '%';
+    }
+
+    // ══════════════════════════════════════════
+    //  SOLUTION CARDS DATA
+    // ══════════════════════════════════════════
+
+    const SOLUTION_CARDS = {
+      'sellers-revenue': { headline: 'Your dealers are having familiarity conversations, not sales conversations', copy: 'In most dealer networks, roughly 70% of counter time goes to product recall: questions already answered in the brochure. The actual sales moment, when the customer is deciding, lasts about 90 seconds. Competitors who win at the counter aren\'t winning on price. They\'ve built something that changes what gets said in those 90 seconds. The pipe exists. Most organisations haven\'t wired it yet.', hook: 'The referral was always there. Nobody built the pipe to carry it.' },
+      'sellers-cost': { headline: 'You\'re paying for field coverage that mostly confirms what dealers already know', copy: 'Field visits average 40 minutes. In most distribution businesses, 60-65% of that time goes to relationship maintenance and order-checking, none of which changes recommendation behaviour. The visit designed to influence the counter has gradually become the visit that keeps the relationship warm. Separating those two jobs, and letting the signal travel without requiring the visit, is where the cost compression is.', hook: 'The relationship is fine. The visit needs a different reason to exist.' },
+      'sellers-speed': { headline: 'Your pipeline data is a week old by the time you see it', copy: 'Most manufacturer-to-dealer reporting runs on a 5-7 day cycle. By the time low sell-through gets flagged, the replenishment decision has already been made. Dealers have switched and the data hasn\'t told you yet. A pattern of behaviour at dealer level becomes visible 4-6 days earlier than the order data shows. That window is currently unwatched. It\'s where most of the switching to competitors happens.', hook: 'The data arrives on time. It arrives after the decision.' },
+      'sellers-adoption': { headline: 'New initiatives reach your sales managers. They stop at the dealer counter.', copy: 'About 80% of channel programs receive formal acknowledgement from distributors. Around 35% get actively pushed by dealers. Programs designed at head office rarely fit a dealer conversation at 11am when a contractor is in a hurry. What makes adoption stick at the last mile is different from what makes it stick at the distributor level. Most organisations only solve for one of those.', hook: 'They said yes. They just didn\'t change anything.' },
+      'recommenders-revenue': { headline: 'The specification is written before your brand enters the conversation', copy: 'Across building materials and agri-input sectors, 65-70% of purchase decisions are locked by the time a specifier formally submits. Your brand either gets written in early, or works twice as hard to get written back in. The conversation where choice happens is the informal one, in the sketch phase, before any brief is written. It happens without you in it. There\'s a way into that conversation that doesn\'t require a sales call.', hook: 'The loss shows up at the quote. The decision happened three months earlier.' },
+      'recommenders-cost': { headline: 'Your technical support team is solving the same problems repeatedly for different specifiers', copy: 'In specification-led industries, technical queries show roughly 70% repetition. The same questions, arriving from specifiers who\'ve never met each other. Your team\'s capacity is the ceiling on your market reach, and a growing specifier base means that ceiling gets hit sooner. Organisations that move past this don\'t add headcount. They build something that travels without them, and surfaces the genuinely novel problems for the humans to handle.', hook: 'The knowledge exists. The question is how far it can walk.' },
+      'recommenders-speed': { headline: 'By the time your specification data reaches product teams, the project has moved on', copy: 'Specification cycles in construction average 8-14 months. Most manufacturers get formal insight at the bid stage or not at all. The useful information arrives 4-6 months earlier: which projects are in design, which specifiers are actively sketching. Closing that gap doesn\'t need more sales coverage. It needs a different kind of signal, from a different point in the chain. The organisations with that signal are shortlisted before you schedule the meeting.', hook: 'The window to influence is in the sketch, not the specification.' },
+      'recommenders-adoption': { headline: 'Your training programs build knowledge. They don\'t change what gets recommended.', copy: 'Specifier training attendance is often strong. Recommendation behaviour afterwards typically moves 15-20% versus the 40-60% manufacturers expect. The part that breaks is specific: what happens when a sceptical client questions the recommendation. Training gives them the knowledge. The moment they need it in a real conversation, they\'re largely on their own. There\'s a way to close that gap that doesn\'t require more training time.', hook: 'They know your product. They don\'t know how to defend recommending it.' },
+      'installers-revenue': { headline: 'Every correct installation is a missed demand signal', copy: 'Installers have the richest customer relationship in most value chains. They\'re in the space when the decision is being made, they know what the client is buying next, and they leave without any of that information travelling upstream. In construction and industrial sectors, this last-mile intelligence represents roughly 30% of addressable demand that never enters the pipeline. Capturing it doesn\'t require adding work for the installer. But it does require a different entry point.', hook: 'The lead lives in the site visit. It just doesn\'t travel.' },
+      'installers-cost': { headline: 'Rework and callbacks are costing you the equivalent of 2-3 projects a year', copy: 'Rework rates in skilled trades average 12-18% depending on sector. Add up the callbacks and the referrals that don\'t happen because of them. That comes to 2-3 projects a year going sideways. Most of those incidents trace back to a decision made on-site without the right specification at hand. That\'s an access problem, and it\'s solvable at scale now, without requiring installers to carry documentation to every job.', hook: 'The mistake doesn\'t happen on the wall. It happens in the gap between knowing and doing.' },
+      'installers-speed': { headline: 'Your best installers are your slowest because they\'re solving problems nobody documented', copy: 'Senior tradespeople typically spend 20-30% of their time on edge cases: dimensions that don\'t match the brief, site conditions that need a workaround. That expertise lives in their heads. Junior installers facing the same situations take two to three times as long, or get it wrong. What experienced people know currently travels only through watching them work. Making it available at the moment of need is a different kind of problem, and a solved one.', hook: 'The knowledge is in the room. It just isn\'t in the system.' },
+      'installers-adoption': { headline: 'New standards get issued. Installation behaviour changes 18 months later.', copy: 'In most trades, the lag between specification update and field adoption runs 12-24 months. Installers learn at the job site, by watching and doing. The standard reaches management; it rarely reaches the person making the cut. Changing behaviour at the point of work requires a different delivery mechanism than changing knowledge in a classroom. Both matter. The gap is in which one most programs invest in.', hook: 'The standard exists. The moment it needs to arrive in is different.' },
+      'fixers-revenue': { headline: 'Your service team is absorbing the fallout from installations you didn\'t do', copy: 'In aftermarket-dependent industries, 40-50% of service calls trace back to incorrect installation by contractors not trained on your product. The economics look like a cost problem. They are. But every service call that resolves a competitor-caused failure is also a conversation with a customer who\'d switch if switching weren\'t more work than staying. Most service teams close the ticket and miss the window. There\'s a moment in that call where the conversation could go somewhere different.', hook: 'You solved their problem. You didn\'t capture the relationship.' },
+      'fixers-cost': { headline: 'You\'re dispatching technical expertise to problems that don\'t require it', copy: 'Triage accuracy in service businesses, matching problem complexity to responder skill, typically runs at 60-70%. That means 30-40% of dispatches are either over-resourced for a simple fix or under-resourced for a complex one. The cost of over-resourcing is direct. The cost of under-resourcing is the second visit. Better scheduling software doesn\'t close this gap. The diagnostic step that happens before the dispatch is where the leverage sits, and it\'s currently the least systematised part of the process.', hook: 'A well-scheduled wrong visit is still a wrong visit.' },
+      'fixers-speed': { headline: 'Your first-time fix rates are lower than they look because you\'re counting the wrong completions', copy: 'First-time fix rate is one of the most commonly tracked metrics in field service, and one of the most misleading. Most measures count whether the technician closed the ticket. They don\'t capture partial fixes that return as new tickets within 30 days, or resolutions that hold until warranty expires and then fail. In sectors with 3-5 year equipment cycles, actual fix quality is invisible in the standard report. The gap between apparent performance and real performance is usually 15-20 points.', hook: 'First-time fix rate measures ticket closure. Actual fix quality shows up 30 days later.' },
+      'fixers-adoption': { headline: 'Your warranty data and your service scheduling aren\'t talking to each other', copy: 'Most service organisations run warranty analysis and field scheduling on separate systems with separate teams. The pattern that predicts which units are about to fail, the combination of fault codes and installation vintage, sits in the claims data and never reaches the scheduling queue. By the time it influences service planning, the proactive window has passed. Connecting these is well-understood as an idea. The gap is in how organisations structure the work to act on what they find.', hook: 'The signal existed. The teams reading it weren\'t talking to each other.' }
+    };
+
+    const GENERIC_CARDS = {
+      'revenue': { headline: 'Your value chain\'s most powerful sales moment is happening without you in it', copy: 'In most B2B2C businesses, the purchase decision is effectively made before it reaches a formal quote. The conversations that shape it, between the recommender and the buyer, between the installer and the end user, happen outside your visibility. Better training and better collateral help at the margin. Changing the outcome requires changing the nature of the conversation at the moment it happens. That requires a different kind of presence than sales coverage provides.', hook: 'You\'re solving for the decision. The decision was made two conversations ago.' },
+      'cost': { headline: 'The cost you\'re optimising isn\'t the one that\'s driving your problem', copy: 'Most cost reduction programs target the visible line items: headcount and logistics. The costs that compound quietly are upstream. Poor specification creates wrong orders. Inadequate support creates churn. These don\'t appear as line items until they\'ve run for two or three years, and by then they\'re expensive to reverse. Organisations that close this gap early tend to find the same thing: the origin was a decision, not an operation.', hook: 'The invoice is downstream. The decision that created it happened months earlier.' },
+      'speed': { headline: 'Your fastest competitors aren\'t moving faster. They\'re starting earlier.', copy: 'Speed advantages rarely come from executing faster. They come from having earlier signal: which customer is ready to buy before they\'ve said so, which specification is about to be written. The organisations that look fast are acting on information that arrived sooner. The gap between them and the rest is signal latency. That latency has a specific address in your value chain, and it\'s usually not where the data team is looking.', hook: 'The window opens earlier than most teams realise. That\'s where the advantage compounds.' },
+      'adoption': { headline: 'Your change initiatives are succeeding at every layer except the one that matters', copy: 'Adoption metrics typically measure how well the message travelled: whether it reached the right people, whether they confirmed they understood it. The last mile, where the new standard meets the actual decision being made in real time, is the step most programs assume will follow from everything upstream. It usually doesn\'t. The program was designed for a decision context different from the one it needed to reach.', hook: 'They heard you. The moment they needed you was different.' }
+    };
+
+    const FALLBACK_CARDS = {
+      'building-materials-other': { headline: 'The lever you named doesn\'t show up on most AI deployment maps for this sector.', copy: 'Most AI pilots in building materials get scoped around revenue or cost before anyone checks what\'s actually breaking. The lever you named tells us something more specific is in play. We\'ve mapped the demand, execution, and supply chain across dealer and contractor networks in this space. We don\'t have a pre-built card for it, but we have enough pattern recognition to know whether it connects to something we\'ve already solved or whether it\'s genuinely new ground. That distinction is worth one conversation.', hook: 'The fact that it didn\'t fit the list is the most interesting thing you\'ve told us.' },
+      'automotive-other': { headline: 'Automotive value chains have leverage points the standard four levers don\'t reach.', copy: 'Revenue, cost, speed, adoption — those are the levers most vendors map. What sits outside them tends to be structural: a relationship that doesn\'t appear on the org chart, a handoff nobody owns, a metric being tracked because it can be measured, not because it matters. We haven\'t built a specific card for the lever you named. That\'s not a gap in your thinking. It\'s a signal worth unpacking, and one conversation is usually enough to place it on the map.', hook: 'If it was one of the four standard levers, you\'d probably have tried something already.' },
+      'agri-inputs-other': { headline: 'In agri value chains, the most consequential levers are rarely the obvious ones.', copy: 'Most AI deployments in agri-inputs start with agronomist reach or dealer coverage. That leaves a long tail of problems that don\'t fit the four standard categories: seasonal compliance, last-mile demonstration, farmer trust, input stacking decisions. The lever you named may sit in that tail. We\'ve worked across enough crop cycles and distributor networks to know whether what you\'re describing has been solved before or not. One conversation is enough to find out.', hook: 'Seasonal businesses have leverage points that generic deployment frameworks don\'t see.' },
+      'industrial-goods-other': { headline: 'In capital goods and industrial supply, most problems get classified wrong before they get addressed.', copy: 'What looks like a revenue problem is often a specification problem. What looks like a cost problem is often a service contract problem. The lever you named tells us the standard framing didn\'t fit — and that\'s a more useful signal than a clean answer would be. We\'ve mapped the dealer-to-installer-to-end-user chain across enough OEM and aftermarket contexts to have a view. Not a pre-built card, but a conversation that starts in the right place.', hook: 'Misclassified problems get misaligned solutions. That\'s worth sorting out before anything gets built.' },
+      'exploratory-other': { headline: 'You\'ve named a lever that sits outside our current coverage for this sector.', copy: 'We\'re building our knowledge of value chains in your sector, and the four standard levers don\'t always capture what\'s actually in play. Sometimes the real problem sits upstream of all of them. What you described suggests a specific hypothesis is forming. We can\'t hand you a pre-built card for it, but we can quickly tell you whether it connects to patterns we\'ve seen elsewhere or whether it\'s new ground worth mapping together.', hook: 'An unmapped problem is either a genuine edge case or a blind spot in the framing. Worth finding out which.' }
+    };
+
+    // ══════════════════════════════════════════
+    //  COPY FORMATTER
+    // ══════════════════════════════════════════
+
+    function formatCopy(text) {
+      // Split into sentences
+      const raw = text.replace(/\.\s+/g, '.|').split('|').filter(s => s.trim());
+      // Group into paragraphs of ~2-3 sentences
+      const paras = [];
+      for (let i = 0; i < raw.length; i += 3) {
+        paras.push(raw.slice(i, i + 3).join(' '));
+      }
+      // Bold percentages and key numbers, then wrap in <p>
+      return paras.map(p => {
+        const highlighted = p
+          .replace(/(\d+[-–]\d+\s*%|\d+\s*%)/g, '<strong>$1</strong>')
+          .replace(/(\d+[-–]\d+\s*(days?|months?|years?|minutes?|seconds?))/gi, '<strong>$1</strong>');
+        return `<p>${highlighted}</p>`;
+      }).join('');
+    }
+
+    // ══════════════════════════════════════════
+    //  RESULTS (NEW ROUTING LOGIC)
+    // ══════════════════════════════════════════
+
+    function showResults() {
+      // 1. Progress bar to 100%
+      const bar = document.getElementById('progressBar');
+      if (bar) bar.style.width = '100%';
+
+      // 2. Hide question screen, show results screen
+      document.getElementById('screen-q').style.display = 'none';
+      document.getElementById('screen-results').style.display = 'block';
+
+      // 3. Extract indices from answers (answers stores arrays like [0], so we need [0])
+      const q1Idx = answers.q1 ? answers.q1[0] : undefined;
+      const q2Idx = answers.q2 ? answers.q2[0] : undefined;
+      const q3Idx = answers.q3 ? answers.q3[0] : undefined;
+      const q4Idx = answers.q4 ? answers.q4[0] : undefined;
+      const q5Idx = answers.q5 ? answers.q5[0] : undefined;
+      const q7Idx = answers.q7 ? answers.q7[0] : undefined;
+
+      // Map indices to labels for pills
+      const roleLabels = ['Sellers', 'Recommenders', 'Installers', 'Fixers'];
+      const leverLabels = ['Revenue', 'Cost', 'Speed', 'Adoption', 'Other'];
+
+      const q1Text = q1Idx !== undefined ? questions[0].options[q1Idx].text.split(':')[0] : 'Role';
+      const q2Text = q2Idx !== undefined ? questions[1].options[q2Idx].text : 'Sector';
+      const q3Text = q3Idx !== undefined ? roleLabels[q3Idx] : 'Role Type';
+      const q4Text = q4Idx !== undefined ? leverLabels[q4Idx] : 'Lever';
+      const q5Text = q5Idx !== undefined ? questions[4].options[q5Idx].text : '';
+      const q6Text = q7Idx !== undefined ? questions[5].options[q7Idx].text : '';
+
+      // 4. Determine depth
+      const deepSectors = ['Building materials & construction', 'Automotive & mobility', 'Agri-inputs & food', 'Industrial goods & machinery'];
+      const isDeep = answers.q2 !== undefined && deepSectors.includes(q2Text);
+
+      // 5. Route to correct card using indices
+      let card;
+
+      if (q4Idx === 4) { // "Other" selected
+        if (isDeep) {
+          const sectorKeys = ['building-materials', 'automotive', 'agri-inputs', 'industrial-goods'];
+          const sectorKey = q2Idx !== undefined ? sectorKeys[q2Idx] : 'exploratory';
+          card = FALLBACK_CARDS[sectorKey + '-other'] || FALLBACK_CARDS['exploratory-other'];
+        } else {
+          card = FALLBACK_CARDS['exploratory-other'];
+        }
+      } else {
+        if (isDeep && q3Idx !== undefined && q4Idx !== undefined) {
+          const roleKeys = ['sellers', 'recommenders', 'installers', 'fixers'];
+          const leverKeys = ['revenue', 'cost', 'speed', 'adoption'];
+          const key = roleKeys[q3Idx] + '-' + leverKeys[q4Idx];
+          card = SOLUTION_CARDS[key] || GENERIC_CARDS[leverKeys[q4Idx]];
+        } else {
+          const leverKeys = ['revenue', 'cost', 'speed', 'adoption'];
+          const key = q4Idx !== undefined ? leverKeys[q4Idx] : 'revenue';
+          card = GENERIC_CARDS[key] || FALLBACK_CARDS['exploratory-other'];
+        }
+      }
+
+      // 6. Populate profile pills
+      const pillsContainer = document.getElementById('profile-pills');
+      pillsContainer.innerHTML = '';
+      [q1Text, q2Text, q3Text, q4Text].forEach(val => {
+        const pill = document.createElement('div');
+        pill.className = 'profile-pill';
+        pill.textContent = val;
+        pillsContainer.appendChild(pill);
+      });
+
+      // 7. Set headline
+      document.getElementById('result-headline').textContent = card.headline;
+
+      // 8. Q5 modifier
+      const sublineEl = document.getElementById('result-subline');
+      if (q5Text === 'It would probably shift somewhere else') {
+        sublineEl.textContent = 'This is where it shows up. The root cause likely sits one level upstream.';
+        sublineEl.style.display = 'block';
+      } else if (q5Text === 'Unsure') {
+        sublineEl.textContent = 'We would want to verify this is the real lever before building anything.';
+        sublineEl.style.display = 'block';
+      } else {
+        sublineEl.style.display = 'none';
+      }
+
+      // 9 & 10. Set copy & hook
+      document.getElementById('result-copy').innerHTML = formatCopy(card.copy);
+      document.getElementById('result-hook').textContent = card.hook;
+
+      // 11. Q6 CTA
+      const ctaDesc = document.getElementById('cta-desc');
+      if (q6Text === 'A 90-day pilot') ctaDesc.textContent = 'A 90-day engagement is enough to prove this signal exists.';
+      else if (q6Text === 'A year-long rollout') ctaDesc.textContent = 'The rollout shape is clear. What is missing is the right build partner.';
+      else if (q6Text === 'A 2-3 year transformation') ctaDesc.textContent = 'This is a multi-year lever. The earlier you move, the wider the moat.';
+      else ctaDesc.textContent = 'A short discovery call is enough to map the exact intervention.';
+    }
+  </script>
+</body>
+
+</html>

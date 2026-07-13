@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GenAI Readiness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --p500: #032C70;
+      --p700: #021F4E;
+      --gold: #FFB600;
+      --gold-hi: #FFD46B;
+      --bg: #06101E;
+      --glass: rgba(255,255,255,0.055);
+      --glass-border: rgba(255,255,255,0.09);
+      --glass-border-strong: rgba(255,255,255,0.17);
+      --text: #EDF2FF;
+      --text-muted: rgba(237,242,255,0.55);
+      --text-dim: rgba(237,242,255,0.30);
+      --font-head: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-body: 'Open Sans', -apple-system, sans-serif;
+    }
+
+    html, body {
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 85% 65% at 12%  8%,  rgba(3,44,112,0.50) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 45% at 88% 88%, rgba(3,44,112,0.28) 0%, transparent 55%),
+        radial-gradient(ellipse 35% 25% at 55% 45%, rgba(8,22,58,0.25)  0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── PROGRESS ── */
+    .progress-wrap {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.05);
+      z-index: 100;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-hi));
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 0 10px rgba(255,182,0,0.55);
+    }
+
+    /* ── COMET TIMELINE ── */
+    .timeline {
+      position: fixed;
+      left: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .tl-track {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 100%;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .tl-fill {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      background: linear-gradient(to bottom, var(--gold), rgba(255,182,0,0.35));
+      height: 0%;
+      transition: height 0.75s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .tl-comet {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold), 0 0 24px rgba(255,182,0,0.45), 0 0 48px rgba(255,182,0,0.15);
+      top: 0%;
+      transition: top 0.75s cubic-bezier(0.4,0,0.2,1);
+      z-index: 2;
+    }
+
+    .tl-comet::after {
+      content: '';
+      position: absolute;
+      top: 100%; left: 50%;
+      transform: translateX(-50%);
+      width: 1px; height: 18px;
+      background: linear-gradient(to bottom, rgba(255,182,0,0.55), transparent);
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.20);
+      transition: all 0.4s;
+      z-index: 1;
+    }
+    .tl-dot.done {
+      background: rgba(255,182,0,0.50);
+      border-color: var(--gold);
+    }
+
+    .tl-label {
+      position: absolute;
+      left: calc(50% + 13px);
+      transform: translateY(-50%);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      white-space: nowrap;
+      transition: color 0.4s;
+    }
+    .tl-label.active { color: var(--gold); }
+    .tl-label.done   { color: rgba(255,182,0,0.38); }
+
+    @media (max-width: 680px) { .timeline { display: none; } }
+
+    /* ── LAYOUT ── */
+    .shell {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+
+    /* ── GLASS CARD ── */
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--glass);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow:
+        0 8px 56px rgba(0,0,0,0.5),
+        0 0 0 0.5px rgba(255,255,255,0.04),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+
+    .screen { padding: 48px 44px; }
+
+    /* ── EYEBROW ── */
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 18px; height: 1.5px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── INTRO ── */
+    .intro-title {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+    .intro-title em { font-style: normal; color: var(--gold); }
+
+    .intro-body {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      max-width: 420px;
+    }
+
+    .intro-meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .meta-item {
+      font-size: 12px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .meta-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 11px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--p700);
+    }
+    .btn-primary:hover {
+      background: var(--gold-hi);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 22px rgba(255,182,0,0.38);
+    }
+    .btn-primary:disabled {
+      opacity: 0.28;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.05);
+      color: var(--text-muted);
+      border: 1px solid var(--glass-border);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.09); }
+    .btn-ghost:disabled { opacity: 0.20; cursor: not-allowed; }
+
+    /* ── QUESTION ── */
+    .q-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .q-label::before {
+      content: '';
+      display: inline-block;
+      width: 18px; height: 1.5px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .q-text {
+      font-family: var(--font-head);
+      font-size: clamp(17px, 2.8vw, 22px);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.25px;
+      margin-bottom: 26px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 28px;
+    }
+
+    .opt {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 16px;
+      border: 1px solid var(--glass-border);
+      border-radius: 11px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.025);
+      transition: all 0.2s;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+    .opt:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--glass-border-strong);
+      color: var(--text);
+    }
+    .opt.selected {
+      background: rgba(255,182,0,0.09);
+      border-color: rgba(255,182,0,0.42);
+      color: var(--text);
+    }
+
+    .opt-marker {
+      width: 17px; height: 17px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.22);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .opt.selected .opt-marker {
+      border-color: var(--gold);
+      background: rgba(255,182,0,0.14);
+    }
+    .opt.selected .opt-marker::after {
+      content: '';
+      display: block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .other-input-wrap { display: none; margin-top: 8px; }
+    .other-input-wrap.visible { display: block; }
+
+    .other-input {
+      width: 100%;
+      padding: 11px 15px;
+      border-radius: 10px;
+      border: 1px solid var(--glass-border-strong);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .other-input:focus { border-color: rgba(255,182,0,0.45); }
+    .other-input::placeholder { color: var(--text-dim); }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideOutLeft {
+      to { opacity: 0; transform: translateX(-28px); }
+    }
+    @keyframes slideOutRight {
+      to { opacity: 0; transform: translateX(28px); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(28px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-28px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── RESULTS ── */
+    .result-header {
+      padding: 44px 44px 36px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .result-header::before {
+      content: '';
+      position: absolute;
+      top: -70px; right: -70px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(49,104,215,0.22) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .result-header::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; left: -50px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,182,0,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .result-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .result-pill {
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 10.5px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.13);
+      letter-spacing: 0.02em;
+    }
+
+    .result-headline {
+      font-family: var(--font-head);
+      font-size: clamp(19px, 3.2vw, 28px);
+      font-weight: 700;
+      line-height: 1.22;
+      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+    }
+
+    .result-subline {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 460px;
+      display: none;
+      margin-top: 10px;
+    }
+
+    .result-body {
+      padding: 32px 44px;
+      border-top: 2px solid var(--gold);
+    }
+
+    .result-copy {
+      font-size: 13.5px;
+      line-height: 1.88;
+      color: rgba(237,242,255,0.62);
+    }
+
+    .result-hook {
+      font-size: 14.5px;
+      font-style: italic;
+      font-weight: 500;
+      color: var(--text);
+      margin: 28px 0 32px;
+      padding: 15px 20px;
+      background: rgba(255,255,255,0.04);
+      border-left: 2px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      line-height: 1.6;
+    }
+
+    .result-cta {
+      margin: 0 24px 24px;
+      padding: 26px 28px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border-strong);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .result-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), rgba(255,182,0,0.18));
+    }
+
+    .cta-title {
+      font-family: var(--font-head);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .cta-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 580px) {
+      .screen { padding: 36px 26px; }
+      .result-header { padding: 36px 26px 30px; }
+      .result-body { padding: 28px 26px; }
+      .result-cta { margin: 0 14px 14px; padding: 22px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="timeline" id="timeline"></div>
+
+  <div class="shell">
+    <div class="card">
+
+      <div class="screen" id="screen-intro" style="animation: fadeUp 0.55s ease forwards;">
+        <div class="eyebrow">GenAI Readiness</div>
+        <h1 class="intro-title">Is your organisation<br>ready for <em>AI</em>?</h1>
+        <p class="intro-body">Six questions to understand where you are, who you serve, and what's really getting in the way. You'll leave with a clear picture and personalised next steps.</p>
+        <div class="intro-meta">
+          <div class="meta-item"><span class="meta-dot"></span>6 questions</div>
+          <div class="meta-item"><span class="meta-dot"></span>~4 minutes</div>
+          <div class="meta-item"><span class="meta-dot"></span>Personalised results</div>
+        </div>
+        <button class="btn btn-primary" onclick="startAssessment()">Begin →</button>
+      </div>
+
+      <div class="screen" id="screen-q" style="display:none;"></div>
+
+      <div id="screen-results" style="display:none;">
+        <div class="result-header">
+          <div class="eyebrow" style="margin-bottom:16px;">Your blind spot</div>
+          <div class="result-pills" id="result-pills"></div>
+          <div class="result-headline" id="result-headline"></div>
+          <div class="result-subline" id="result-subline"></div>
+        </div>
+        <div class="result-body">
+          <div class="result-copy" id="result-copy"></div>
+          <div class="result-hook" id="result-hook"></div>
+        </div>
+        <div class="result-cta">
+          <div class="cta-title">Ready to close this gap?</div>
+          <div class="cta-desc" id="cta-desc"></div>
+          <button class="btn btn-primary">Let's talk →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { id:"q1", label:"Question 1 of 6 — Your role", text:"Which of these sounds most like your seat at the table?", type:"single-with-other", options:[
+        { text:"Growth Strategist: finding the next big opportunity" },
+        { text:"AI Growth Strategist: figuring out where AI fits into growth" },
+        { text:"Founder's Office: close to leadership, working on strategic bets" },
+        { text:"Head of Strategic Initiatives: owning the cross-functional stuff that needs new thinking" },
+        { text:"Something else", isOther:true }
+      ]},
+      { id:"q2", label:"Question 2 of 6 — Your sector", text:"What sector do you operate in?", type:"single", options:[
+        { text:"Building materials & construction" },
+        { text:"Automotive & mobility" },
+        { text:"Agri-inputs & food" },
+        { text:"Industrial goods & machinery" },
+        { text:"Consumer goods & retail" },
+        { text:"Healthcare & pharma" },
+        { text:"Energy & infrastructure" }
+      ]},
+      { id:"q3", label:"Question 3 of 6 — Your key person", text:"Who in your value chain has the most influence over what the end customer says?", type:"single", options:[
+        { text:"Sellers: dealers, distributors, agents" },
+        { text:"Recommenders: architects, doctors, consultants" },
+        { text:"Installer: electricians, masons, fabricators" },
+        { text:"Fixer: servicers, aftermarket" }
+      ]},
+      { id:"q4", label:"Question 4 of 6 — Value levers", text:"Across these four value levers, where is your organisation leaving the most on the table?", type:"single-with-other", options:[
+        { text:"Winning more customers and growing revenue" },
+        { text:"Cutting costs and reducing waste" },
+        { text:"Moving faster with shorter cycle times" },
+        { text:"Making the change actually stick" },
+        { text:"Other", isOther:true, placeholder:"Tell us more..." }
+      ]},
+      { id:"q5", label:"Question 5 of 6 — Root cause", text:"If you fixed that tomorrow what would happen to the problem? Would the problem actually be gone, or would it just show up somewhere else?", type:"single", options:[
+        { text:"It would disappear" },
+        { text:"It would probably shift somewhere else" },
+        { text:"Unsure" }
+      ]},
+      { id:"q7", label:"Question 6 of 6 — Your commitment", text:"If this works, what kind of commitment are you ready to make?", type:"single", options:[
+        { text:"A 90-day pilot" },
+        { text:"A year-long rollout" },
+        { text:"A 2-3 year transformation" }
+      ]}
+    ];
+
+    const SOLUTION_CARDS = {
+      'sellers-revenue':      { headline:'Your dealers are having familiarity conversations, not sales conversations', copy:'In most dealer networks, roughly 70% of counter time goes to product recall: questions already answered in the brochure. The actual sales moment, when the customer is deciding, lasts about 90 seconds. Competitors who win at the counter aren\'t winning on price. They\'ve built something that changes what gets said in those 90 seconds. The pipe exists. Most organisations haven\'t wired it yet.', hook:'The referral was always there. Nobody built the pipe to carry it.' },
+      'sellers-cost':         { headline:'You\'re paying for field coverage that mostly confirms what dealers already know', copy:'Field visits average 40 minutes. In most distribution businesses, 60-65% of that time goes to relationship maintenance and order-checking, none of which changes recommendation behaviour. The visit designed to influence the counter has gradually become the visit that keeps the relationship warm. Separating those two jobs, and letting the signal travel without requiring the visit, is where the cost compression is.', hook:'The relationship is fine. The visit needs a different reason to exist.' },
+      'sellers-speed':        { headline:'Your pipeline data is a week old by the time you see it', copy:'Most manufacturer-to-dealer reporting runs on a 5-7 day cycle. By the time low sell-through gets flagged, the replenishment decision has already been made. Dealers have switched and the data hasn\'t told you yet. A pattern of behaviour at dealer level becomes visible 4-6 days earlier than the order data shows. That window is currently unwatched. It\'s where most of the switching to competitors happens.', hook:'The data arrives on time. It arrives after the decision.' },
+      'sellers-adoption':     { headline:'New initiatives reach your sales managers. They stop at the dealer counter.', copy:'About 80% of channel programs receive formal acknowledgement from distributors. Around 35% get actively pushed by dealers. Programs designed at head office rarely fit a dealer conversation at 11am when a contractor is in a hurry. What makes adoption stick at the last mile is different from what makes it stick at the distributor level. Most organisations only solve for one of those.', hook:'They said yes. They just didn\'t change anything.' },
+      'recommenders-revenue': { headline:'The specification is written before your brand enters the conversation', copy:'Across building materials and agri-input sectors, 65-70% of purchase decisions are locked by the time a specifier formally submits. Your brand either gets written in early, or works twice as hard to get written back in. The conversation where choice happens is the informal one, in the sketch phase, before any brief is written. It happens without you in it. There\'s a way into that conversation that doesn\'t require a sales call.', hook:'The loss shows up at the quote. The decision happened three months earlier.' },
+      'recommenders-cost':    { headline:'Your technical support team is solving the same problems repeatedly for different specifiers', copy:'In specification-led industries, technical queries show roughly 70% repetition. The same questions, arriving from specifiers who\'ve never met each other. Your team\'s capacity is the ceiling on your market reach, and a growing specifier base means that ceiling gets hit sooner. Organisations that move past this don\'t add headcount. They build something that travels without them, and surfaces the genuinely novel problems for the humans to handle.', hook:'The knowledge exists. The question is how far it can walk.' },
+      'recommenders-speed':   { headline:'By the time your specification data reaches product teams, the project has moved on', copy:'Specification cycles in construction average 8-14 months. Most manufacturers get formal insight at the bid stage or not at all. The useful information arrives 4-6 months earlier: which projects are in design, which specifiers are actively sketching. Closing that gap doesn\'t need more sales coverage. It needs a different kind of signal, from a different point in the chain. The organisations with that signal are shortlisted before you schedule the meeting.', hook:'The window to influence is in the sketch, not the specification.' },
+      'recommenders-adoption':{ headline:'Your training programs build knowledge. They don\'t change what gets recommended.', copy:'Specifier training attendance is often strong. Recommendation behaviour afterwards typically moves 15-20% versus the 40-60% manufacturers expect. The part that breaks is specific: what happens when a sceptical client questions the recommendation. Training gives them the knowledge. The moment they need it in a real conversation, they\'re largely on their own. There\'s a way to close that gap that doesn\'t require more training time.', hook:'They know your product. They don\'t know how to defend recommending it.' },
+      'installers-revenue':   { headline:'Every correct installation is a missed demand signal', copy:'Installers have the richest customer relationship in most value chains. They\'re in the space when the decision is being made, they know what the client is buying next, and they leave without any of that information travelling upstream. In construction and industrial sectors, this last-mile intelligence represents roughly 30% of addressable demand that never enters the pipeline. Capturing it doesn\'t require adding work for the installer. But it does require a different entry point.', hook:'The lead lives in the site visit. It just doesn\'t travel.' },
+      'installers-cost':      { headline:'Rework and callbacks are costing you the equivalent of 2-3 projects a year', copy:'Rework rates in skilled trades average 12-18% depending on sector. Add up the callbacks and the referrals that don\'t happen because of them. That comes to 2-3 projects a year going sideways. Most of those incidents trace back to a decision made on-site without the right specification at hand. That\'s an access problem, and it\'s solvable at scale now, without requiring installers to carry documentation to every job.', hook:'The mistake doesn\'t happen on the wall. It happens in the gap between knowing and doing.' },
+      'installers-speed':     { headline:'Your best installers are your slowest because they\'re solving problems nobody documented', copy:'Senior tradespeople typically spend 20-30% of their time on edge cases: dimensions that don\'t match the brief, site conditions that need a workaround. That expertise lives in their heads. Junior installers facing the same situations take two to three times as long, or get it wrong. What experienced people know currently travels only through watching them work. Making it available at the moment of need is a different kind of problem, and a solved one.', hook:'The knowledge is in the room. It just isn\'t in the system.' },
+      'installers-adoption':  { headline:'New standards get issued. Installation behaviour changes 18 months later.', copy:'In most trades, the lag between specification update and field adoption runs 12-24 months. Installers learn at the job site, by watching and doing. The standard reaches management; it rarely reaches the person making the cut. Changing behaviour at the point of work requires a different delivery mechanism than changing knowledge in a classroom. Both matter. The gap is in which one most programs invest in.', hook:'The standard exists. The moment it needs to arrive in is different.' },
+      'fixers-revenue':       { headline:'Your service team is absorbing the fallout from installations you didn\'t do', copy:'In aftermarket-dependent industries, 40-50% of service calls trace back to incorrect installation by contractors not trained on your product. The economics look like a cost problem. They are. But every service call that resolves a competitor-caused failure is also a conversation with a customer who\'d switch if switching weren\'t more work than staying. Most service teams close the ticket and miss the window. There\'s a moment in that call where the conversation could go somewhere different.', hook:'You solved their problem. You didn\'t capture the relationship.' },
+      'fixers-cost':          { headline:'You\'re dispatching technical expertise to problems that don\'t require it', copy:'Triage accuracy in service businesses, matching problem complexity to responder skill, typically runs at 60-70%. That means 30-40% of dispatches are either over-resourced for a simple fix or under-resourced for a complex one. The cost of over-resourcing is direct. The cost of under-resourcing is the second visit. Better scheduling software doesn\'t close this gap. The diagnostic step that happens before the dispatch is where the leverage sits, and it\'s currently the least systematised part of the process.', hook:'A well-scheduled wrong visit is still a wrong visit.' },
+      'fixers-speed':         { headline:'Your first-time fix rates are lower than they look because you\'re counting the wrong completions', copy:'First-time fix rate is one of the most commonly tracked metrics in field service, and one of the most misleading. Most measures count whether the technician closed the ticket. They don\'t capture partial fixes that return as new tickets within 30 days, or resolutions that hold until warranty expires and then fail. In sectors with 3-5 year equipment cycles, actual fix quality is invisible in the standard report. The gap between apparent performance and real performance is usually 15-20 points.', hook:'First-time fix rate measures ticket closure. Actual fix quality shows up 30 days later.' },
+      'fixers-adoption':      { headline:'Your warranty data and your service scheduling aren\'t talking to each other', copy:'Most service organisations run warranty analysis and field scheduling on separate systems with separate teams. The pattern that predicts which units are about to fail, the combination of fault codes and installation vintage, sits in the claims data and never reaches the scheduling queue. By the time it influences service planning, the proactive window has passed. Connecting these is well-understood as an idea. The gap is in how organisations structure the work to act on what they find.', hook:'The signal existed. The teams reading it weren\'t talking to each other.' }
+    };
+
+    const GENERIC_CARDS = {
+      'revenue':  { headline:'Your value chain\'s most powerful sales moment is happening without you in it', copy:'In most B2B2C businesses, the purchase decision is effectively made before it reaches a formal quote. The conversations that shape it, between the recommender and the buyer, between the installer and the end user, happen outside your visibility. Better training and better collateral help at the margin. Changing the outcome requires changing the nature of the conversation at the moment it happens. That requires a different kind of presence than sales coverage provides.', hook:'You\'re solving for the decision. The decision was made two conversations ago.' },
+      'cost':     { headline:'The cost you\'re optimising isn\'t the one that\'s driving your problem', copy:'Most cost reduction programs target the visible line items: headcount and logistics. The costs that compound quietly are upstream. Poor specification creates wrong orders. Inadequate support creates churn. These don\'t appear as line items until they\'ve run for two or three years, and by then they\'re expensive to reverse. Organisations that close this gap early tend to find the same thing: the origin was a decision, not an operation.', hook:'The invoice is downstream. The decision that created it happened months earlier.' },
+      'speed':    { headline:'Your fastest competitors aren\'t moving faster. They\'re starting earlier.', copy:'Speed advantages rarely come from executing faster. They come from having earlier signal: which customer is ready to buy before they\'ve said so, which specification is about to be written. The organisations that look fast are acting on information that arrived sooner. The gap between them and the rest is signal latency. That latency has a specific address in your value chain, and it\'s usually not where the data team is looking.', hook:'The window opens earlier than most teams realise. That\'s where the advantage compounds.' },
+      'adoption': { headline:'Your change initiatives are succeeding at every layer except the one that matters', copy:'Adoption metrics typically measure how well the message travelled: whether it reached the right people, whether they confirmed they understood it. The last mile, where the new standard meets the actual decision being made in real time, is the step most programs assume will follow from everything upstream. It usually doesn\'t. The program was designed for a decision context different from the one it needed to reach.', hook:'They heard you. The moment they needed you was different.' }
+    };
+
+    const FALLBACK_CARDS = {
+      'building-materials-other': { headline:'The lever you named doesn\'t show up on most AI deployment maps for this sector.', copy:'Most AI pilots in building materials get scoped around revenue or cost before anyone checks what\'s actually breaking. The lever you named tells us something more specific is in play. We\'ve mapped the demand, execution, and supply chain across dealer and contractor networks in this space. We don\'t have a pre-built card for it, but we have enough pattern recognition to know whether it connects to something we\'ve already solved or whether it\'s genuinely new ground. That distinction is worth one conversation.', hook:'The fact that it didn\'t fit the list is the most interesting thing you\'ve told us.' },
+      'automotive-other':         { headline:'Automotive value chains have leverage points the standard four levers don\'t reach.', copy:'Revenue, cost, speed, adoption — those are the levers most vendors map. What sits outside them tends to be structural: a relationship that doesn\'t appear on the org chart, a handoff nobody owns, a metric being tracked because it can be measured, not because it matters. We haven\'t built a specific card for the lever you named. That\'s not a gap in your thinking. It\'s a signal worth unpacking, and one conversation is usually enough to place it on the map.', hook:'If it was one of the four standard levers, you\'d probably have tried something already.' },
+      'agri-inputs-other':        { headline:'In agri value chains, the most consequential levers are rarely the obvious ones.', copy:'Most AI deployments in agri-inputs start with agronomist reach or dealer coverage. That leaves a long tail of problems that don\'t fit the four standard categories: seasonal compliance, last-mile demonstration, farmer trust, input stacking decisions. The lever you named may sit in that tail. We\'ve worked across enough crop cycles and distributor networks to know whether what you\'re describing has been solved before or not. One conversation is enough to find out.', hook:'Seasonal businesses have leverage points that generic deployment frameworks don\'t see.' },
+      'industrial-goods-other':   { headline:'In capital goods and industrial supply, most problems get classified wrong before they get addressed.', copy:'What looks like a revenue problem is often a specification problem. What looks like a cost problem is often a service contract problem. The lever you named tells us the standard framing didn\'t fit — and that\'s a more useful signal than a clean answer would be. We\'ve mapped the dealer-to-installer-to-end-user chain across enough OEM and aftermarket contexts to have a view. Not a pre-built card, but a conversation that starts in the right place.', hook:'Misclassified problems get misaligned solutions. That\'s worth sorting out before anything gets built.' },
+      'exploratory-other':        { headline:'You\'ve named a lever that sits outside our current coverage for this sector.', copy:'We\'re building our knowledge of value chains in your sector, and the four standard levers don\'t always capture what\'s actually in play. Sometimes the real problem sits upstream of all of them. What you described suggests a specific hypothesis is forming. We can\'t hand you a pre-built card for it, but we can quickly tell you whether it connects to patterns we\'ve seen elsewhere or whether it\'s new ground worth mapping together.', hook:'An unmapped problem is either a genuine edge case or a blind spot in the framing. Worth finding out which.' }
+    };
+
+    let current = 0;
+    const answers  = {};
+    const otherText = {};
+
+    function buildTimeline() {
+      const tl = document.getElementById('timeline');
+      tl.innerHTML = '';
+
+      const track = document.createElement('div');
+      track.className = 'tl-track';
+      const fill = document.createElement('div');
+      fill.className = 'tl-fill';
+      fill.id = 'tl-fill';
+      track.appendChild(fill);
+      tl.appendChild(track);
+
+      const comet = document.createElement('div');
+      comet.className = 'tl-comet';
+      comet.id = 'tl-comet';
+      tl.appendChild(comet);
+
+      questions.forEach((q, i) => {
+        const pct = (i / (questions.length - 1)) * 100;
+
+        const dot = document.createElement('div');
+        dot.className = 'tl-dot';
+        dot.style.top = pct + '%';
+        dot.id = 'tl-dot-' + i;
+        tl.appendChild(dot);
+
+        const lbl = document.createElement('div');
+        lbl.className = 'tl-label';
+        lbl.style.top = pct + '%';
+        lbl.textContent = 'Q' + (i + 1);
+        lbl.id = 'tl-label-' + i;
+        tl.appendChild(lbl);
+      });
+    }
+
+    function updateTimeline(idx) {
+      const pct = (idx / (questions.length - 1)) * 100;
+      const comet = document.getElementById('tl-comet');
+      const fill  = document.getElementById('tl-fill');
+      if (comet) comet.style.top   = pct + '%';
+      if (fill)  fill.style.height = pct + '%';
+      questions.forEach((q, i) => {
+        const dot = document.getElementById('tl-dot-' + i);
+        const lbl = document.getElementById('tl-label-' + i);
+        if (dot) dot.classList.toggle('done', i < idx);
+        if (lbl) {
+          lbl.classList.remove('active', 'done');
+          if (i === idx)    lbl.classList.add('active');
+          else if (i < idx) lbl.classList.add('done');
+        }
+      });
+    }
+
+    function startAssessment() {
+      document.getElementById('screen-intro').style.display = 'none';
+      document.getElementById('screen-q').style.display = 'block';
+      current = 0;
+      renderQuestion(0);
+      updateTimeline(0);
+      updateProgress();
+    }
+
+    function renderQuestion(idx) {
+      const q   = questions[idx];
+      const sel = answers[q.id] || [];
+      const isWithOther = q.type === 'single-with-other';
+
+      const optsHtml = q.options.map((opt, i) => {
+        return `<div class="opt ${sel.includes(i) ? 'selected' : ''}" onclick="selectOption(${idx},${i})">
+          <div class="opt-marker"></div>
+          <span>${opt.text}</span>
+        </div>`;
+      }).join('');
+
+      const otherOpt = isWithOther ? q.options.find(o => o.isOther) : null;
+      const otherPH  = (otherOpt && otherOpt.placeholder) ? otherOpt.placeholder : 'Tell us more...';
+      const otherVis = (isWithOther && sel.includes(q.options.length - 1)) ? 'visible' : '';
+      const otherHtml = isWithOther
+        ? `<div class="other-input-wrap ${otherVis}" id="other-wrap-${idx}">
+             <input class="other-input" type="text" placeholder="${otherPH}"
+               value="${otherText[q.id] || ''}" oninput="saveOtherText(${idx}, this.value)"
+               id="other-input-${idx}" />
+           </div>` : '';
+
+      const canNext = sel.length > 0;
+      const isLast  = idx === questions.length - 1;
+
+      document.getElementById('screen-q').innerHTML = `
+        <div class="q-label">${q.label}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="options">${optsHtml}</div>
+        ${otherHtml}
+        <div class="nav">
+          <button class="btn btn-ghost" onclick="goBack()" ${idx === 0 ? 'disabled' : ''}>← Back</button>
+          <button class="btn btn-primary" id="nextBtn"
+            onclick="${isLast ? 'showResults()' : 'goNext()'}"
+            ${canNext ? '' : 'disabled'}>
+            ${isLast ? 'See my results →' : 'Continue →'}
+          </button>
+        </div>`;
+    }
+
+    function transitionToQuestion(newIdx, dir) {
+      const c = document.getElementById('screen-q');
+      c.style.animation = dir === 'forward'
+        ? 'slideOutLeft 0.28s ease forwards'
+        : 'slideOutRight 0.28s ease forwards';
+
+      setTimeout(() => {
+        c.style.animation = 'none';
+        c.style.opacity   = '0';
+        current = newIdx;
+        renderQuestion(current);
+        updateTimeline(current);
+        updateProgress();
+        void c.offsetWidth;
+        c.style.opacity   = '';
+        c.style.animation = dir === 'forward'
+          ? 'slideInRight 0.34s ease forwards'
+          : 'slideInLeft 0.34s ease forwards';
+        setTimeout(() => { c.style.animation = 'none'; }, 360);
+      }, 280);
+    }
+
+    function selectOption(qIdx, optIdx) {
+      const q = questions[qIdx];
+      if (!answers[q.id]) answers[q.id] = [];
+      answers[q.id] = [optIdx];
+
+      document.querySelectorAll('#screen-q .opt').forEach((el, i) => {
+        el.classList.toggle('selected', i === optIdx);
+      });
+
+      if (q.type === 'single-with-other') {
+        const wrap    = document.getElementById('other-wrap-' + qIdx);
+        const isOther = !!(q.options[optIdx] && q.options[optIdx].isOther);
+        if (wrap) {
+          wrap.classList.toggle('visible', isOther);
+          if (isOther) setTimeout(() => {
+            const inp = document.getElementById('other-input-' + qIdx);
+            if (inp) inp.focus();
+          }, 50);
+        }
+      }
+
+      const btn = document.getElementById('nextBtn');
+      if (btn) btn.disabled = false;
+
+      const isOtherSel = q.type === 'single-with-other' && q.options[optIdx] && q.options[optIdx].isOther;
+      if (!isOtherSel) {
+        setTimeout(() => {
+          if (qIdx < questions.length - 1) transitionToQuestion(qIdx + 1, 'forward');
+          else showResults();
+        }, 480);
+      }
+    }
+
+    function goNext() {
+      const q = questions[current];
+      if (!answers[q.id] || answers[q.id].length === 0) return;
+      transitionToQuestion(current + 1, 'forward');
+    }
+
+    function goBack() {
+      if (current === 0) return;
+      transitionToQuestion(current - 1, 'backward');
+    }
+
+    function saveOtherText(qIdx, val) {
+      otherText[questions[qIdx].id] = val;
+    }
+
+    function updateProgress() {
+      document.getElementById('progressBar').style.width = ((current / questions.length) * 100) + '%';
+    }
+
+    function showResults() {
+      document.getElementById('progressBar').style.width = '100%';
+      document.getElementById('screen-q').style.display = 'none';
+      document.getElementById('screen-results').style.display = 'block';
+
+      const fill  = document.getElementById('tl-fill');
+      const comet = document.getElementById('tl-comet');
+      if (fill)  fill.style.height = '100%';
+      if (comet) comet.style.top   = '100%';
+      questions.forEach((q, i) => {
+        const d = document.getElementById('tl-dot-' + i);
+        const l = document.getElementById('tl-label-' + i);
+        if (d) d.classList.add('done');
+        if (l) { l.classList.remove('active'); l.classList.add('done'); }
+      });
+
+      const q1Idx = answers.q1 ? answers.q1[0] : undefined;
+      const q2Idx = answers.q2 ? answers.q2[0] : undefined;
+      const q3Idx = answers.q3 ? answers.q3[0] : undefined;
+      const q4Idx = answers.q4 ? answers.q4[0] : undefined;
+      const q5Idx = answers.q5 ? answers.q5[0] : undefined;
+      const q7Idx = answers.q7 ? answers.q7[0] : undefined;
+
+      const leverLabels = ['Revenue','Cost','Speed','Adoption','Other'];
+      const roleLabels  = ['Sellers','Recommenders','Installers','Fixers'];
+
+      const q1Text = q1Idx !== undefined ? questions[0].options[q1Idx].text.split(':')[0] : 'Role';
+      const q2Text = q2Idx !== undefined ? questions[1].options[q2Idx].text : 'Sector';
+      const q3Text = q3Idx !== undefined ? roleLabels[q3Idx] : 'Role type';
+      const q4Text = q4Idx !== undefined ? leverLabels[q4Idx] : 'Lever';
+      const q5Text = q5Idx !== undefined ? questions[4].options[q5Idx].text : '';
+      const q6Text = q7Idx !== undefined ? questions[5].options[q7Idx].text : '';
+
+      const deepSectors = ['Building materials & construction','Automotive & mobility','Agri-inputs & food','Industrial goods & machinery'];
+      const isDeep = q2Idx !== undefined && deepSectors.includes(q2Text);
+
+      let card;
+      if (q4Idx === 4) {
+        if (isDeep) {
+          const sk = ['building-materials','automotive','agri-inputs','industrial-goods'];
+          card = FALLBACK_CARDS[(sk[q2Idx] || 'exploratory') + '-other'] || FALLBACK_CARDS['exploratory-other'];
+        } else {
+          card = FALLBACK_CARDS['exploratory-other'];
+        }
+      } else {
+        if (isDeep && q3Idx !== undefined && q4Idx !== undefined) {
+          const rk = ['sellers','recommenders','installers','fixers'];
+          const lk = ['revenue','cost','speed','adoption'];
+          card = SOLUTION_CARDS[rk[q3Idx] + '-' + lk[q4Idx]] || GENERIC_CARDS[lk[q4Idx]];
+        } else {
+          const lk = ['revenue','cost','speed','adoption'];
+          card = GENERIC_CARDS[lk[q4Idx] || 'revenue'] || FALLBACK_CARDS['exploratory-other'];
+        }
+      }
+
+      document.getElementById('result-pills').innerHTML =
+        [q1Text, q2Text, q3Text, q4Text].map(p => `<span class="result-pill">${p}</span>`).join('');
+      document.getElementById('result-headline').textContent = card.headline;
+      document.getElementById('result-copy').textContent     = card.copy;
+      document.getElementById('result-hook').textContent     = card.hook;
+
+      const subEl = document.getElementById('result-subline');
+      if (q5Text === 'It would probably shift somewhere else') {
+        subEl.textContent = 'This is where it shows up. The root cause likely sits one level upstream.';
+        subEl.style.display = 'block';
+      } else if (q5Text === 'Unsure') {
+        subEl.textContent = 'We would want to verify this is the real lever before building anything.';
+        subEl.style.display = 'block';
+      }
+
+      const ctaMap = {
+        'A 90-day pilot':            'A 90-day engagement is enough to prove this signal exists.',
+        'A year-long rollout':       'The rollout shape is clear. What is missing is the right build partner.',
+        'A 2-3 year transformation': 'This is a multi-year lever. The earlier you move, the wider the moat.'
+      };
+      document.getElementById('cta-desc').textContent = ctaMap[q6Text] || 'A short discovery call is enough to map the exact intervention.';
+    }
+
+    buildTimeline();
+  </script>
+</body>
+</html>
