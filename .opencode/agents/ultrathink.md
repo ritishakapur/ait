@@ -1,6 +1,7 @@
 ---
+name: ultrathink
+model: bharatcode/bharatcode:qwen36-35b-q6-256k-vision
 description: Strategic planning agent. Decomposes complex requests into subtasks, maps dependencies, assigns agents. Returns a plan, not an answer.
-mode: subagent
 ---
 
 # ULTRATHINK — Strategic Planner
