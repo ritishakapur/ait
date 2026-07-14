@@ -25,16 +25,9 @@ Track all decisions, mistakes, and patterns from every session. Save to the comp
 
 ## AGENT CATEGORIES
 
-### Research (9 agents, sequential)
-1. Company.md
-2. Industry.md
-3. Stakeholders.md
-4. Revenue-Architecture.md
-5. Revenue-Economics.md
-6. Competition.md
-7. Products.md
-8. Technology.md
-9. Customers.md
+### Research (delegated to @research agent)
+- Invoke `@research on [Company Name]` — it handles the full 9-agent pipeline
+- The research agent creates the folder, runs all 9 agents, waits for confirmation after each
 
 ### Workflows (5 agents, sequential)
 1. Business-Layer.md
@@ -84,6 +77,10 @@ Track all decisions, mistakes, and patterns from every session. Save to the comp
 
 ### Phase 2: Choose Category
 Ask the user: "Which category do you want to work on? (research / workflows / templates / frameworks)"
+
+If user chooses "research":
+- Delegate to `@research on [Company Name]` — the research agent handles the full pipeline
+- Do NOT run the agents yourself
 
 ### Phase 3: Execute Agents
 For the chosen category:
