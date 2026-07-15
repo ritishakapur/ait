@@ -51,6 +51,12 @@ The agents run in dependency phases. Agents within the same phase run **in paral
 - **Verification.md** — Trust but verify. Cross-file consistency. CEO test.
 - **Writing.md** — Clear, specific, sourced. No fluff. One idea per sentence.
 - **Memory.md** — Record decisions, mistakes, patterns.
+- **Confidence Protocol** — Every quantitative figure, estimate, or derived metric must be tagged with a confidence rating:
+  - **High:** Directly from primary sources (audited financials, official regulatory filings, verified press releases).
+  - **Medium:** Strongly supported by multiple sources, industry benchmarks, or logical deduction from disclosed data.
+  - **Low:** Synthesized estimates, directional figures, or based on limited/secondary sources (e.g., market sizing, deal volumes, capture rates).
+  - **Very Low:** Highly speculative, based on new/unproven products, or entirely inferred from pricing announcements without actual revenue/usage data.
+  - Include a "Figure Derivation & Benchmarks" section at the end of every output file explaining how key numbers were calculated, where benchmarks came from, and any corrections or assumptions made.
 
 ## YOUR TESTS (from tests/memory/)
 
