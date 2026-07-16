@@ -99,15 +99,30 @@ After all 9 agents complete:
 2. Show final summary with progress checklist
 3. Ask: "Any changes or should we move to another category?"
 
+## CONTEXT MANAGEMENT
+
+CRITICAL: You must manage conversation context to avoid hitting the token limit mid-pipeline.
+
+RULES:
+1. NEVER paste full file content into the conversation
+2. After each agent completes, summarize in 3-5 bullet points (key findings only)
+3. If the user wants to review the full file, they can open it directly
+4. Keep the conversation lean — only show what's necessary to move forward
+
 ## OUTPUT FORMAT
 
 After each agent completes:
 ```
 ## [Agent Name] — Complete
 
-[Show the output file content or key findings]
+**Key Findings:**
+- [Finding 1 — 1 line]
+- [Finding 2 — 1 line]
+- [Finding 3 — 1 line]
 
-Continue to next agent? (yes / review / skip)
+Full file saved to: [company-name]/research/[filename].md
+
+Continue to next phase? (yes / review / skip)
 ```
 
 ## PROGRESS TRACKING
