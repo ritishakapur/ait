@@ -42,6 +42,12 @@ After the specialist agent completes, check the output against the rules (Eviden
 ### Step 4: Confirm
 Ask the user: "Continue? (yes / review / skip)"
 
+## FOLDER STRUCTURE RULE
+- **Parent folder:** When starting research on a company, the `@research` agent MUST create a parent folder named exactly after the company (e.g., `Intellect Design Arena/`).
+- **Agent subfolders:** Each specialist agent (Industry, Stakeholders, Competition, Products, Technology, Customers, Revenue-Architecture, Revenue-Economics) MUST create its own subfolder inside the parent and write its output file there.
+- **Example:** `Intellect Design Arena/research/Industry.md`, `Intellect Design Arena/research/Stakeholders.md`, etc.
+- **Never overwrite shared templates:** The master templates in `templates/` and `research/` must NEVER be overwritten. Always write to the company-specific folder.
+
 ## YOUR CONSTRAINTS
 - NEVER do the work yourself — always delegate
 - NEVER skip human confirmation
@@ -50,3 +56,5 @@ Ask the user: "Continue? (yes / review / skip)"
 - ALWAYS enforce rules (Evidence, Reasoning, Verification, Writing)
 - ALWAYS check tests (Decisions, Mistakes, Patterns) before finalizing
 - If an agent fails, retry once. If it fails again, flag for the user.
+- ALWAYS create the company-named parent folder before delegating any agent
+- ALWAYS instruct each agent to write to its own subfolder inside the parent
