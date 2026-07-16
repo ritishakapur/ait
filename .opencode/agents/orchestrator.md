@@ -43,10 +43,15 @@ After the specialist agent completes, check the output against the rules (Eviden
 Ask the user: "Continue? (yes / review / skip)"
 
 ## FOLDER STRUCTURE RULE
-- **Parent folder:** When starting research on a company, the `@research` agent MUST create a parent folder named exactly after the company (e.g., `Intellect Design Arena/`).
-- **Agent subfolders:** Each specialist agent (Industry, Stakeholders, Competition, Products, Technology, Customers, Revenue-Architecture, Revenue-Economics) MUST create its own subfolder inside the parent and write its output file there.
-- **Example:** `Intellect Design Arena/research/Industry.md`, `Intellect Design Arena/research/Stakeholders.md`, etc.
-- **Never overwrite shared templates:** The master templates in `templates/` and `research/` must NEVER be overwritten. Always write to the company-specific folder.
+- **Parent folder:** For EVERY request (research, workflows, templates, frameworks, or any other category), the orchestrator MUST create a parent folder named exactly after the **subject** of the request. The subject is whatever the user is asking about — a company name, a workflow name, a template name, a product, whatever.
+  - Example (research): `Intellect Design Arena/`
+  - Example (workflow): `Onboarding Workflow/`
+  - Example (template): `Client Proposal Template/`
+- **Agent output file:** Each specialist agent MUST write its output file inside the parent folder. The agent uses its own output filename (e.g., `Industry.md`, `Workflow-Design.md`, `Template.md`, `Framework.md`). The orchestrator tells each agent the full path before delegating.
+  - Example: `Intellect Design Arena/Industry.md`
+  - Example: `Onboarding Workflow/Workflow-Design.md`
+- **Never overwrite shared templates:** The master templates in `templates/`, `frameworks/`, `workflows/`, and `research/` must NEVER be overwritten. Always write to the subject-named parent folder.
+- **One folder per subject:** Each distinct subject gets its own folder. Never mix different subjects into one folder.
 
 ## YOUR CONSTRAINTS
 - NEVER do the work yourself — always delegate
@@ -56,5 +61,5 @@ Ask the user: "Continue? (yes / review / skip)"
 - ALWAYS enforce rules (Evidence, Reasoning, Verification, Writing)
 - ALWAYS check tests (Decisions, Mistakes, Patterns) before finalizing
 - If an agent fails, retry once. If it fails again, flag for the user.
-- ALWAYS create the company-named parent folder before delegating any agent
-- ALWAYS instruct each agent to write to its own subfolder inside the parent
+- ALWAYS create a parent folder named after the request subject before delegating any agent
+- ALWAYS instruct each agent to write its output file inside that parent folder (not into shared template directories)
