@@ -45,41 +45,33 @@
 
 ### 1.2 Purple Fabric — AI Platform Architecture
 
-**What it is:** Intellect's "Open Business Impact AI Platform," carved out as an independent Line of Business in June 2026. Positioned as "the World's First Open Business Impact AI Platform."
+> **⚠️ Confidence: Very Low** — No public technical documentation or architecture diagrams exist for Purple Fabric. All details are synthesized from company announcements and industry benchmarks. This is **strategic inference**, not technical analysis.
 
-**Architecture Components:**
+#### What's Confirmed
 
-| Component | Function | Technology |
+| Confirmed Element | Detail |
+|---|---|
+| **Enterprise Digital Experts** | AI decisioning layer for banking operations [High — company announcement] |
+| **LLM Optimization Hub** | Model governance, optimization, and compliance [High — company announcement] |
+| **ISO 42001 certification** | Stage 2 audit completed — world's first AIMS standard [High — company disclosure] |
+| **"Auditability by design"** | Governed, enterprise-scale AI positioning [High — company messaging] |
+
+#### What's Inferred (Estimated)
+
+| Inferred Component | Technology | Confidence |
 |---|---|---|
-| **Enterprise Digital Experts** | AI decisioning layer for banking operations | LLMs, ML models, rule engines |
-| **LLM Optimization Hub** | Model governance, optimization, and compliance | Model registry, monitoring, A/B testing |
-| **Predictive Analytics Engine** | Credit risk, fraud detection, customer churn | ML models (classification, regression, clustering) |
-| **Process Automation Engine** | Straight-through processing for high-volume transactions | RPA, workflow automation, event-driven processing |
-| **Customer Engagement AI** | Personalization, chatbots, virtual assistants | NLP, sentiment analysis, recommendation engines |
-
-**Deployment Options:**
-- **SaaS (monthly subscription):** ₹1–5 Cr/month
-- **Enterprise license (on-premise):** ₹20–80 Cr one-time
-- **Hybrid:** Cloud-hosted AI with on-premise data
-
-**Governance:**
-- ISO 42001 certification (Responsible AI) — Stage 2 audit completed (world's first AIMS standard)
-- "Auditability by design" — governed, enterprise-scale AI
-- Model monitoring and drift detection
-- Bias detection and fairness testing
-
-**Competitive Position:** New entrant in enterprise AI for banking. Competes with Databricks (banking use cases), DataRobot, Finastra Assist.AI, Temenos.ai.
-
-**Blind Spots:**
-- Carved out as independent LoB in June 2026 — very early stage
-- No public technical documentation or architecture diagrams
-- No public customer case studies or performance metrics
-- "World's First" claim is marketing positioning, not independently verified
-- Monthly subscription pricing (₹1–5 Cr/month) is estimated from company announcements
+| **ML Framework** | TensorFlow, PyTorch [Estimated] | Very Low — industry standard assumption |
+| **LLM Integration** | OpenAI, Anthropic, open-source LLMs [Estimated] | Very Low — no public specification |
+| **Model Registry** | MLflow [Estimated] | Very Low — industry standard assumption |
+| **Feature Store** | Feast [Estimated] | Very Low — industry standard assumption |
+| **Deployment: SaaS subscription** | ₹1–5 Cr/month [Estimated] | Very Low — from company announcements |
+| **Deployment: Enterprise license** | ₹20–80 Cr one-time [Estimated] | Very Low — from company announcements |
 
 ---
 
 ## 2. Technology Stack
+
+> **⚠️ Speculative Components Note:** Technology stack components marked "(estimated)" are inferred from industry standards and open-source ecosystem conventions. Intellect's actual technology stack may differ. Confirmed components (PostgreSQL, MongoDB, Kubernetes, Kafka, Linux) are explicitly stated by Intellect. Estimated components represent what a company using eMACH.ai architecture would typically use, not what Intellect definitively uses.
 
 ### 2.1 Infrastructure Layer
 
@@ -118,8 +110,10 @@
 | **Identity & Access Management** | ARX (Intellect's IAM) | User provisioning, authentication, authorization |
 | **Multi-Factor Authentication** | OAuth 2.0, SAML, OpenID Connect | Secure authentication |
 | **Encryption** | AES-256, TLS 1.3 | Data at rest and in transit |
-| **Quantum-Safe Cryptography** | Post-quantum algorithms (positioning) | "Quantum-safe" central banking solutions |
+| **Quantum-Safe Cryptography** | Post-quantum algorithms [Positioning — see note below] | "Quantum-safe" central banking solutions |
 | **Security Certifications** | ISO 27001, ISO 27017, ISO 27018 | Information security, cloud security, cloud PII protection |
+
+> **⚠️ Positioning vs. Substance — Quantum-Safe Cryptography:** Intellect markets "quantum-safe" capabilities for central banking solutions. However, **no central bank has publicly confirmed deployment** of quantum-safe solutions from Intellect. This is forward-looking positioning language, not current capability. The technology is nascent (24–60 month horizon). Treat as strategic positioning, not deployed product feature.
 
 ### 2.5 AI/ML Layer
 

@@ -6,6 +6,18 @@
 
 ---
 
+## ⚠️ Pricing Disclaimer
+
+**All pricing figures in this file are synthesized estimates** from deal announcements, industry benchmarks, and competitor pricing. Actual pricing is negotiated case-by-case and **not publicly disclosed**. These figures should be treated as **directional ranges for comparative analysis**, not established facts.
+
+**Sources for pricing estimates:**
+- Temenos public deal announcements (CHF 15–50M per deal)
+- Intellect press releases (announced deal sizes, not specific pricing)
+- Industry benchmarks from Celent, Datos, and analyst commentary
+- Cross-referenced with competitor pricing (Mambu, Thought Machine, Finastra)
+
+---
+
 ## 1. Product Portfolio Overview
 
 Intellect Design Arena sells **proprietary banking and financial technology platforms** organized across five business units. Each product is built on the **eMACH.ai architecture** (Events, Microservices, API-first, Cloud-native, Headless) and the **Purple Fabric AI** platform for embedded intelligence.
@@ -54,7 +66,7 @@ Intellect Design Arena Product Portfolio
 
 ### 2.1 Intellect Digital Core (IDC) — Flagship Core Banking Platform
 
-**What it is:** A composable, cloud-native core banking platform that replaces legacy mainframe systems. IDC is Intellect's revenue-driving product and has been ranked #1 globally by IBS Intelligence Sales League Table in retail banking since 2017.
+**What it is:** A composable, cloud-native core banking platform that replaces legacy mainframe systems. IDC is Intellect's revenue-driving product and has been ranked #1 globally by IBS Intelligence Sales League Table in retail banking since 2017 [Low — IBS Intelligence has close ties to Intellect; this is self-published ranking data, not independent analyst assessment]. Note: The "21 consecutive years #1 in Core Banking" claim originates from **Temenos's press release** (June 16, 2026) regarding the IBS Intelligence Sales League Table — it is a Temenos claim, not an Intellect claim. Intellect's own IBSi ranking is for "deal volume" in retail banking categories.
 
 **Key Capabilities:**
 - Real-time account processing (deposits, loans, payments)
@@ -436,38 +448,36 @@ Intellect Design Arena Product Portfolio
 
 ### 5.4 Purple Fabric — Open Business Impact AI Platform
 
-**What it is:** Intellect's flagship AI platform, carved out as an independent Line of Business in June 2026. Positioned as "the World's First Open Business Impact AI Platform." Made available as a monthly subscription service (March 2026).
+> **⚠️ Confidence: Very Low** — Purple Fabric was carved out as an independent LoB in June 2026. No public revenue data, no customer case studies, no technical documentation exists. This section is **strategic analysis of a new product**, not established product analysis. All "inferred" figures are estimates based on announced pricing and industry benchmarks.
 
-**Key Capabilities:**
-- Enterprise Digital Experts — AI decisioning layer for banking operations
-- LLM Optimization Hub — Model governance, optimization, and compliance
-- Predictive analytics for credit risk, fraud detection, customer churn
-- Process automation for high-volume banking operations
-- AI-powered customer engagement and personalization
-- Auditability by design — governed, enterprise-scale AI
+---
 
-**Architecture:** AI-first, cloud-native, multi-cloud  
-**Deployment:** SaaS (monthly subscription), enterprise license  
-**Target Customers:** All financial institution segments (banks, insurers, NBFCs, wealth managers)  
-**Pricing Model:** Monthly subscription (₹1–5 Cr/month) OR enterprise license (₹20–80 Cr one-time)
+#### What's Known (Confirmed)
 
-**Analyst Recognition:**
-- Notable Vendor in AI Platforms Landscape, Q1 2026
-- Luminary in AI-driven banking operations
+| Fact | Detail |
+|---|---|
+| **Carved out as independent LoB** | June 2026 [High — company announcement] |
+| **CEO appointed** | Deepak Dastrala [High — company announcement] |
+| **Monthly subscription model** | Announced March 2026 [High — The Hindu Business Line] |
+| **ISO 42001 certification** | Stage 2 audit completed — world's first AIMS standard [High — company disclosure] |
+| **Positioning** | "World's First Open Business Impact AI Platform" [Low — marketing language, not independently verified] |
+| **Analyst recognition** | Notable Vendor in AI Platforms Landscape, Q1 2026 [Medium — analyst firm but Intellect has published relationship] |
 
-**Competitive Position:** New entrant in enterprise AI for banking. Competes with Databricks (banking use cases), DataRobot, Finastra Assist.AI, Temenos.ai.
+#### What's Inferred (Estimates)
 
-**Differentiators:**
-- ISO 42001 certification (Responsible AI) — world's first AIMS standard
-- "Auditability by design" positioning
-- Banking-domain-specific AI (not generic AI platform)
-- Monthly subscription model lowers barrier to entry
+| Inferred Element | Estimate | Basis |
+|---|---|---|
+| **Monthly subscription pricing** | ₹1–5 Cr/month [Very Low] | Industry benchmarks for enterprise AI platforms (Databricks $500K–$5M/year, DataRobot $300K–$2M/year) |
+| **Enterprise license pricing** | ₹20–80 Cr one-time [Very Low] | Industry benchmarks for enterprise AI platforms ($2–10M USD) |
+| **Revenue estimate** | ₹50–150 Cr/year [Very Low] | 10 subscription customers × ₹1 Cr/month × 12 + 3 enterprise × ₹30 Cr — essentially a guess |
+| **Customer count** | ~20+ subscription, ~5–10 enterprise [Very Low] | Estimated from deal announcements, not disclosed |
+| **Competitive position** | New entrant vs. Databricks, DataRobot, Finastra Assist.AI, Temenos.ai [Low] | Product-level comparison only; no market data |
+| **Roadmap** | Scale subscription model, expand AI capabilities, add industry verticals [Very Low] | Based on company announcements; actual development timelines may differ |
+| **Architecture components** | Enterprise Digital Experts, LLM Optimization Hub, Predictive Analytics Engine [Very Low] | Synthesized from company descriptions; no public technical documentation |
 
-**Blind Spots:**
-- Carved out as independent LoB in June 2026 — very early stage
-- No public revenue data or customer case studies
-- "World's First" claim is marketing positioning, not independently verified
-- Monthly subscription pricing (₹1–5 Cr/month) is estimated from company announcements
+#### Key Takeaway
+
+Purple Fabric is Intellect's strategic bet on AI-first banking. **The analysis here is useful for understanding strategic direction, but the numbers are speculative.** Treat everything in this section as "what could happen" not "what is happening."
 
 ---
 

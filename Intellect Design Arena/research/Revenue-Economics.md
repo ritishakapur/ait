@@ -8,6 +8,10 @@
 
 ---
 
+> **⚠️ See Revenue-Architecture.md Section 1 (Foundational Assumption)** — This file inherits the same uncertainty: the total revenue figure (₹1,800–2,200 Cr) is inferred from profit margins, not actual financial statements. Every number below compounds from that inference.
+
+---
+
 ## 1. Unit Economics
 
 ### 1.1 Per-Customer Unit Economics (Consumer Banking — Core Segment)
@@ -27,7 +31,7 @@
 | **Year 2+ Revenue per Customer** | ₹4 Cr/year | Support/maintenance only |
 | **Year 2+ Gross Profit** | ₹3 Cr/year | ₹4 - R&D allocation (₹1) |
 | **Year 2+ Gross Margin** | 75% | ₹3 / ₹4 |
-| **10-Year LTV ( undiscounted)** | ₹73 Cr | ₹33 (Year 1) + ₹40 (Years 2–11) |
+| **10-Year LTV ( undiscounted)** | ₹69–79 Cr [Medium] | ₹33 (Year 1) + ₹36–46 (Years 2–10, with support escalation) |
 | **10-Year Gross Profit (undiscounted)** | ₹47 Cr | ₹17 (Year 1) + ₹30 (Years 2–11) |
 | **10-Year LTV Margin** | 64% | ₹47 / ₹73 |
 
@@ -132,7 +136,7 @@ vs. pure SaaS benchmark:
 
 ### Lever 1: Raise Pricing Power
 
-**Current state:** Intellect prices at a 20–30% discount to Temenos for comparable products. This is a conscious strategy to win deals against Swiss incumbents.
+**Current state:** Intellect prices at a **70–85% discount to Temenos** [Low — corrected from earlier 20–30% estimate; see Section 7.5 derivation and Competition.md Pricing Verification]. This is a conscious strategy to win deals against Swiss incumbents.
 
 **Option A: Price at parity with Temenos**
 - Impact: +15–25% revenue per deal
@@ -296,7 +300,7 @@ vs. pure SaaS benchmark:
 |---|---|---|
 | **Recurring revenue %** | 6/10 | ~18% — below SaaS benchmark (30–40%) |
 | **Customer retention** | 9/10 | 95%+ for core banking — extremely sticky |
-| **Pricing power** | 6/10 | Discounts to Temenos; AI pricing unproven |
+| **Pricing power** | 3/10 | 70–85% discount to Temenos [corrected from earlier 20–30% estimate]; AI pricing unproven |
 | **Revenue predictability** | 5/10 | Lumpy deal flow; implementation-heavy |
 | **Geographic diversification** | 6/10 | 61+ countries but India-centric leadership |
 | **Customer concentration** | 6/10 | 500+ customers but top 20 likely drive 40–50% |
@@ -586,19 +590,19 @@ This section explains how every quoted figure was derived. Where no single autho
 | 7 | 40–60% | 95–98% | At market | 75–90% accuracy |
 | 5 | 20–40% | 90–95% | 10–20% discount | 50–75% accuracy |
 | 3 | 10–20% | 85–90% | 20–30% discount | 25–50% accuracy |
-| 1 | <10% | <85% | 30%+ discount | <25% accuracy |
+| 1 | <10% | <85% | 70%+ discount | <25% accuracy |
 
 **Intellect Scores:**
 - Recurring %: ~18% → **6/10** (between 5 and 7, weighted toward 6 because Purple Fabric is growing)
 - Retention: 95%+ → **9/10** (excellent, core banking is extremely sticky)
-- Pricing Power: 20–30% discount to Temenos → **5/10** (significant discounting)
+- Pricing Power: **70–85% discount to Temenos** [Low — corrected from earlier 20–30% estimate; see Section 7.5 and Competition.md Pricing Verification] → **3/10** (significant discounting, consistent with "70%+ discount" rubric row)
 - Predictability: Lumpy deal flow, 50.8% YoY growth → **5/10** (high growth but unpredictable)
 - Geographic diversification: 61+ countries, India-centric → **6/10** (good coverage, weak leadership depth)
 - Customer concentration: Top 20 likely drive 40–50% → **6/10** (moderate concentration)
 - Margin trajectory: 18.5% → potential 22–25% → **6/10** (improving but slow)
 - New revenue streams: Purple Fabric, insurance, central banking → **7/10** (promising but unproven)
-- **Overall: (6+9+5+5+6+6+6+7) / 8 = 50 / 8 = 6.25/10**
-- **Working estimate: 6.1/10** (rounded down slightly for conservatism)
+- **Overall: (6+9+3+5+6+6+6+7) / 8 = 48 / 8 = 6.0/10**
+- **Working estimate: 6.0/10** (rounded down slightly for conservatism)
 
 **Confidence: Medium.** The scoring is subjective but follows a consistent rubric. The overall score reflects a company that is solid but has room for improvement in recurring revenue, pricing power, and predictability.
 

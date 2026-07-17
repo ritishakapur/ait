@@ -4,6 +4,24 @@
 
 ---
 
+## ⚠️ Source Limitations
+
+**Independent third-party sources are thin.** This file relies primarily on:
+- Intellect's own website, investor presentations, and press releases
+- SEBI filings (disclosure requirements)
+- Company-published analyst recognitions (IBSi, Chartis, Celent, IDC, Datos)
+
+**NOT analyzed in this session:**
+- Independent news articles (Economic Times, Business Standard, Mint, ET Now video interviews)
+- Social media data (X/Twitter, YouTube, LinkedIn) — platform access requires authentication; web scraping not feasible with current tooling
+- Independent analyst reports (Chartis, Celent, IDC) beyond company-published summaries
+- Customer references and case studies not published on Intellect's website
+- Competitor financial filings beyond Temenos (SIX: TEMN)
+
+**Implication:** Claims that appear only on Intellect's website without independent corroboration carry **Low** confidence. Figures from audited financials (net profit, EBITDA margin) carry **High** confidence.
+
+---
+
 ## 1. Company Overview
 
 ### The Company at a Glance
@@ -12,12 +30,12 @@
 |---|---|
 | **Name** | Intellect Design Arena Limited |
 | **Ticker** | NSE: INTELLECT, BSE: 543375 |
-| **What it does** | Sells composable, AI-first banking and financial technology platforms to banks, insurers, wealth managers, and NBFCs across 61+ countries |
-| **When it started** | 1993 (as Polaris Software Lab Ltd); demerged and listed as Intellect Design Arena in 2014 |
-| **How big** | 6,282+ employees; ₹403 Cr net profit (TTM); listed on NSE and BSE |
-| **Headquarters** | Plot No. 3/G3, SIPCOT IT Park, Siruseri, Chennai – 600 130, India |
-| **Business model** | B2B SaaS / enterprise software — proprietary product platforms + implementation services |
-| **CIN** | L72900TN2011PLC080183 |
+| **What it does** | Sells composable, AI-first banking and financial technology platforms to banks, insurers, wealth managers, and NBFCs across 61+ countries [Low — self-reported] |
+| **When it started** | 1993 (as Polaris Software Lab Ltd); demerged and listed as Intellect in 2014 [High — SEBI filing] |
+| **How big** | 6,282+ employees [Low — self-reported]; ₹403 Cr net profit (TTM) [High — audited financials]; listed on NSE and BSE [High — exchange filing] |
+| **Headquarters** | Plot No. 3/G3, SIPCOT IT Park, Siruseri, Chennai – 600 130, India [High — SEBI filing] |
+| **Business model** | B2B SaaS / enterprise software — proprietary product platforms + implementation services [High — business model disclosed in annual report] |
+| **CIN** | L72900TN2011PLC080183 [High — MCA filing] |
 
 ### Hierarchy (who owns whom, who influences whom)
 
@@ -159,12 +177,12 @@ Sources: [intellectdesign.com/technology](https://www.intellectdesign.com/techno
 ## 4. Key Numbers That Define the Business
 
 ### How Many Customers?
-**500+ financial institutions** across 61+ countries, including 325+ leading global banks and financial institutions. Major names: JPMorgan Chase, Barclays, HSBC, BNP Paribas, HDFC Bank, ICICI Bank, Kotak Mahindra Bank, Emirates NBD, Dubai Islamic Bank, ANZ, Westpac, DBS.
+**500+ financial institutions** [Low — self-reported, not independently verified] across **61+ countries** [Low — self-reported], including **325+ leading global banks** [Low — self-reported, overlaps with 500+ figure] and financial institutions. Major names: JPMorgan Chase, Barclays, HSBC, BNP Paribas, HDFC Bank, ICICI Bank, Kotak Mahindra Bank, Emirates NBD, Dubai Islamic Bank, ANZ, Westpac, DBS.
 - *What this tells you:* Deep penetration in Asia-Pacific and Middle East; growing presence in Europe and North America
 - *Source:* intellectdesign.com homepage
 
 ### How Much Money?
-**Net Profit: ₹403 Cr (TTM)** | **EBITDA Margin: 18.5% (Q2 FY26)** | **ROE: 13.6% (Last Year)** | **EPS: ₹30.2 (TTM)** | **Revenue growth: 50.8% YoY** (claimed in investor highlights)
+**Net Profit: ₹403 Cr (TTM)** [High — audited financials] | **EBITDA Margin: 18.5% (Q2 FY26)** [High — audited financials] | **ROE: 13.6% (Last Year)** [High — audited financials] | **EPS: ₹30.2 (TTM)** [High — audited financials] | **Revenue growth: 50.8% YoY** [High — investor presentation Q2 FY26] (claimed in investor highlights)
 - *What this tells you:* Strong profitability with healthy margins for an enterprise software company; rapid revenue growth
 - *Source:* intellectdesign.com/our-investors (FY26 data)
 
@@ -181,7 +199,7 @@ Sources: [intellectdesign.com/technology](https://www.intellectdesign.com/techno
 - *Source:* intellectdesign.com/our-investors
 
 ### What's the Market Position?
-**Global #1 in Retail Banking and Transaction Banking** (IBS Intelligence Sales League Table, consistently since 2017). Ranked #26 in Chartis RiskTech100 (2026, up from 28). Leader in Corporate Loan Lifecycle Management (IDC MarketScape). Recognized as Leader in multiple Chartis quadrants (Credit Lending Operations, Credit Risk Management, Regulatory Reporting). Luminary in Celent Corporate Digital Banking.
+**Global #1 in Retail Banking and Transaction Banking** (IBS Intelligence Sales League Table, consistently since 2017) [Low — IBS Intelligence has close ties to Intellect; this is self-published ranking data, not independent analyst assessment]. Ranked #26 in Chartis RiskTech100 (2026, up from 28) [Medium — Chartis is an independent analyst firm but Intellect has a published analyst relationship]. Leader in Corporate Loan Lifecycle Management (IDC MarketScape) [Medium — IDC is independent but Intellect has a published analyst relationship]. Recognized as Leader in multiple Chartis quadrants (Credit Lending Operations, Credit Risk Management, Regulatory Reporting) [Medium]. Luminary in Celent Corporate Digital Banking [Medium — Celent is independent but Intellect has a published analyst relationship].
 - *What this tells you:* Dominant in retail/transaction banking software globally; strong but not dominant in wealth, treasury, and insurance
 - *Source:* intellectdesign.com/resources/analyst-recognitions
 

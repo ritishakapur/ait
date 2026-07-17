@@ -12,21 +12,38 @@ The global banking software market is **oligopolistic at the top tier** but **fr
 
 ### Market Share Estimate
 
+> **⚠️ Market Share Confidence: Low** — Exact market share figures for core banking vendors are not publicly disclosed. The estimates below are synthesized from IBS Intelligence league tables, analyst commentary, and revenue comparisons. These should be treated as directional, not precise.
+
 | Vendor | Estimated Global Core Banking Market Share | Revenue Scale | Primary Strength |
 |---|---|---|---|
-| **Temenos** | ~15–20% | CHF 1.17B (~₹10,500 Cr) | #1 in core banking for 21 consecutive years; massive global footprint |
-| **Finastra** | ~10–15% | Private (Vista Equity Partners); estimated $1B+ | Comprehensive suite; $7 trillion in daily transactions |
-| **FIS / FIServ** | ~8–12% | $13B+ (parent) | US market dominance; broad product breadth |
-| **Oracle (Flexcube)** | ~5–8% | Part of Oracle ($100B+ parent) | Database strength; bundled ERP offerings |
-| **Intellect Design Arena** | ~3–5% | ₹1,800–2,200 Cr (est.) | #1 in retail/transaction banking by deal volume (IBSi); design thinking differentiator |
-| **NCR** | ~3–5% | $4.5B (parent) | Branch automation; legacy mainframe expertise |
-| **Mambu** | ~1–2% | Private; estimated $200–300M ARR | Cloud-native pure-play; neo-bank focus |
-| **Thought Machine** | ~1–2% | Private; estimated $150–250M ARR | API-first Vertical Banking Platform |
-| **Backbase** | ~1–2% | Private; estimated $100–200M ARR | Digital engagement layer |
-| **Sopra Banking Software** | ~1–2% | Part of Sopra Group (€2.5B) | European market strength |
-| **Others (50+ vendors)** | ~30–40% | Fragmented | Regional specialists, vertical players |
+| **Temenos** | ~15–20% [Medium] | CHF 1.17B (~₹10,500 Cr) | #1 in core banking for 21 consecutive years; massive global footprint |
+| **Finastra** | ~10–15% [Medium] | Private (Vista Equity Partners); estimated $1B+ | Comprehensive suite; $7 trillion in daily transactions |
+| **FIS / FIServ** | ~8–12% [Low] | $13B+ (parent) | US market dominance; broad product breadth |
+| **Oracle (Flexcube)** | ~5–8% [Low] | Part of Oracle ($100B+ parent) | Database strength; bundled ERP offerings |
+| **Intellect Design Arena** | ~3–5% [Low] | ₹1,800–2,200 Cr (est.) | #1 in retail/transaction banking by deal volume (IBSi); design thinking differentiator |
+| **NCR** | ~3–5% [Low] | $4.5B (parent) | Branch automation; legacy mainframe expertise |
+| **Mambu** | ~1–2% [Very Low] | Private; estimated $200–300M ARR | Cloud-native pure-play; neo-bank focus |
+| **Thought Machine** | ~1–2% [Very Low] | Private; estimated $150–250M ARR | API-first Vertical Banking Platform |
+| **Backbase** | ~1–2% [Very Low] | Private; estimated $100–200M ARR | Digital engagement layer |
+| **Sopra Banking Software** | ~1–2% [Low] | Part of Sopra Group (€2.5B) | European market strength |
+| **Others (50+ vendors)** | ~30–40% [Low] | Fragmented | Regional specialists, vertical players |
 
 **Key Insight:** The top 2 vendors (Temenos + Finastra) hold ~25–35% of the market. Intellect is the largest Indian vendor globally and the fastest-growing challenger, but still holds a fraction of the market share of the top 2.
+
+### Pricing Verification — The 70–85% Discount Claim
+
+> **⚠️ This claim is synthesized, not verified.** The "70–85% discount vs. Temenos" pricing claim appears throughout this folder (Competition.md, Products.md, Customers.md, Revenue-Architecture.md, Revenue-Economics.md). Here is what we actually know:
+>
+> **Evidence chain:**
+> 1. Temenos public pricing benchmarks: CHF 15–50M per deal (~₹1,350–4,500 Cr) — from Temenos investor materials and press releases
+> 2. Intellect announced deal sizes: ₹15–40 Cr per bank — from Intellect's website and press releases
+> 3. Industry commentary: Indian vendors charge significantly less than Swiss/Western vendors
+>
+> **What's missing:** No direct price comparison exists. No customer has published "we chose Intellect over Temenos because it was X% cheaper." Actual pricing is negotiated case-by-case.
+>
+> **Directional conclusion:** Intellect charges roughly 10–15% of Temenos pricing for comparable products. This represents a ~85–90% discount, not 20–30%. The earlier "20–30% discount" claim (found in Revenue-Economics.md Section 3.1 before correction) was incorrect.
+>
+> **Confidence: Low.** This is a synthesized directional claim, not verified pricing data.
 
 ---
 
@@ -73,7 +90,7 @@ The global banking software market is **oligopolistic at the top tier** but **fr
 | **Architecture** | eMACH.ai (born composable) | Composable Solutions (modernized legacy) | Intellect |
 | **Cloud-native** | Multi-cloud, hybrid/default | Temenos SaaS (growing) | Temenos |
 | **AI capabilities** | Purple Fabric (standalone AI LoB) | Temenos.ai (embedded) | Tie |
-| **Pricing** | 70–85% discount vs. Temenos | Premium pricing | Intellect (for budget-conscious buyers) |
+| **Pricing** | 70–85% discount vs. Temenos [Low — synthesized; see Pricing Verification below] | Premium pricing | Intellect (for budget-conscious buyers) |
 | **Design thinking** | FT 8012 Design Center; cultural DNA | Standard consulting approach | Intellect |
 | **Islamic banking** | #1 dedicated Islamic banking suite | Good but not #1 | Intellect |
 | **North America** | 96 deals in 2026 (growing) | Established presence | Temenos |
@@ -371,6 +388,19 @@ The global banking software market is **oligopolistic at the top tier** but **fr
 | **Significance** | Signals Intellect's ecosystem strategy — turning competitive threats into delivery capacity |
 
 **Strategic Implication:** Wipro and HCL were previously competing with Intellect in the Indian banking software market. Their transition to partners is a significant competitive advantage — Intellect now has access to their delivery capacity without the competitive threat.
+
+**Deeper Analysis — What This Shift Means:**
+
+| Dimension | Impact | Risk |
+|---|---|---|
+| **Delivery capacity** | Wipro (~6,282 employees) + HCL (~205,000 employees) provide massive scalable delivery for Intellect's implementations | — |
+| **Competitive dynamics** | Removes two major Indian competitors from the battlefield | — |
+| **Conflict of interest** | Wipro and HCL implement for MULTIPLE banking vendors (including Temenos, Finastra, and others). They are not exclusive to Intellect. Their "partnership" with Intellect does not preclude serving competitors. | **Medium** — Intellect may be investing in partner enablement that also benefits competitors |
+| **Market signal** | Signals Intellect's growing confidence and ecosystem maturity. Competitors → Partners is a rare strategic move in enterprise software. | — |
+| **Quality control** | Implementing Intellect products at Wipro/HCL scale requires training and process alignment. Quality variance is possible. | **Medium** — inconsistent implementation quality could damage Intellect's CMMI Level 5 brand |
+| **Revenue sharing** | Revenue split between Intellect (license) and Wipro/HCL (services) is not publicly disclosed. If services revenue is substantial, this creates a dependency. | **Low-Medium** — unknown financial terms |
+
+**Bottom line:** This is a net-positive strategic move, but the non-exclusivity of the partnership and potential conflict of interest (Wipro/HCL serving multiple banking vendors) are under-discussed risks.
 
 ---
 

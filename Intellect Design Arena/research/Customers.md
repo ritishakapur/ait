@@ -8,14 +8,16 @@
 
 ## 1. Customer Base Overview
 
+> **⚠️ Data Limitations:** Many figures in this file are synthesized estimates. Customer names are from Intellect's website and press releases. Independent verification of specific product deployments is limited. Deal sizes, retention rates, and concentration figures are directional only.
+
 | Metric | Value |
 |---|---|
-| **Total financial institutions** | 500+ |
-| **Leading global banks** | 325+ |
-| **Countries of operation** | 61+ |
-| **Customer retention rate** | 95%+ (industry standard for core banking) |
-| **Average customer lifecycle** | 10+ years (core banking); 5 years (AI products) |
-| **Customer concentration** | Top 20 customers likely drive 40–50% of revenue (estimated) |
+| **Total financial institutions** | 500+ [Low — self-reported, not independently verified] |
+| **Leading global banks** | 325+ [Low — self-reported, overlaps with 500+ figure] |
+| **Countries of operation** | 61+ [Low — self-reported] |
+| **Customer retention rate** | 95%+ [Low — this is the **industry standard** for core banking platforms due to enormous switching costs. Intellect's actual retention rate is not publicly disclosed. The figure is used as a benchmark, not a measured outcome.] |
+| **Average customer lifecycle** | 10+ years (core banking) [Low — industry standard]; 5 years (AI products) [Very Low — Purple Fabric is new] |
+| **Customer concentration** | Top 20 customers likely drive 40–50% of revenue [Very Low — completely guessed. See Section 7 for detailed limitation note.] |
 
 **What this tells you:** Intellect has a broad, diversified customer base across consumer banks, wholesale banks, central banks, NBFCs, insurers, and wealth managers. The 95%+ retention rate and 10+ year lifecycle create extremely sticky revenue. However, customer concentration (top 20 driving significant revenue) is a risk if key customers churn or reduce spending.
 
@@ -44,7 +46,9 @@
 - Intellect Payments — payment processing
 - Add-on modules (lending, wealth, insurance)
 
-**Average Deal Size:** ₹15–40 Cr (mid-tier India); ₹50–150 Cr (large India); USD 5–20M (international)
+**Average Deal Size:** ₹15–40 Cr (mid-tier India) [Low — synthesized from industry benchmarks]; ₹50–150 Cr (large India) [Low]; USD 5–20M (international) [Low — synthesized from Temenos deal sizes in similar markets]
+
+> **Pricing Context:** Intellect's pricing is estimated at **70–85% discount vs. Temenos** [Low — synthesized directional claim, not verified pricing. See Competition.md Pricing Verification for full analysis. Actual pricing is negotiated case-by-case.]
 
 **Sales Cycle:** 12–24 months (enterprise); 6–12 months (mid-tier)
 
@@ -445,14 +449,16 @@
 
 ## 7. Customer Concentration Risk
 
+> **⚠️ Data Limitation:** Customer concentration figures below are **estimates based on typical enterprise software patterns** (top 10–20 customers often drive 40–60% of revenue). Intellect does NOT disclose customer concentration in any public filing. These figures are directional only — they should not be treated as measured outcomes.
+
 ### Estimated Customer Concentration
 
 | Rank | Customer Segment | Estimated Revenue Contribution | Risk Level |
 |---|---|---|---|
-| **Top 5 customers** | Large Indian consumer banks (HDFC, ICICI, Axis, Kotak, Canara) | ~15–20% of total revenue | Medium |
-| **Top 10 customers** | Top 5 Indian banks + top 5 international | ~25–30% of total revenue | Medium |
-| **Top 20 customers** | Top 10 + regional banks, NBFCs, insurers | ~40–50% of total revenue | Medium-High |
-| **Top 50 customers** | Top 20 + mid-tier banks, co-op banks | ~60–70% of total revenue | High |
+| **Top 5 customers** | Large Indian consumer banks (HDFC, ICICI, Axis, Kotak, Canara) | ~15–20% of total revenue [Very Low — guessed] | Medium |
+| **Top 10 customers** | Top 5 Indian banks + top 5 international | ~25–30% of total revenue [Very Low — guessed] | Medium |
+| **Top 20 customers** | Top 10 + regional banks, NBFCs, insurers | ~40–50% of total revenue [Very Low — guessed] | Medium-High |
+| **Top 50 customers** | Top 20 + mid-tier banks, co-op banks | ~60–70% of total revenue [Very Low — guessed] | High |
 
 **Mitigation:**
 - 500+ customer base provides diversification

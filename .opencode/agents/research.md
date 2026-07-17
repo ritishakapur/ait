@@ -22,27 +22,68 @@ The agents run in dependency goals. Agents within the same goal run **in paralle
 3. **Stakeholders.md** — @stakeholders
    - Depends on: Company.md
 
-### Goal 3 — Revenue Architecture (1 agent)
+### Goal 3 — Revenue Deep-Dive (2 agents, parallel)
 4. **Revenue-Architecture.md** — @revenue-architecture
-   - Depends on: Company.md + Industry.md + Stakeholders.md (Goals 1-3)
-
-### Goal 4 — Revenue Deep-Dive (1 agent)
+   - Depends on: Company.md + Industry.md + Stakeholders.md (Goals 1-2)
 5. **Revenue-Economics.md** — @revenue-economics
-   - Depends on: Revenue-Architecture.md + Goals 1-3
+   - Depends on: Revenue-Architecture.md + Goals 1-2
 
-### Goal 5 — Competition (1 agent)
+### Goal 4 — Competition (1 agent)
 6. **Competition.md** — @competition
    - Depends on: Company.md + Industry.md
 
-### Goal 6 — Products (1 agent)
+### Goal 5 — Products (1 agent)
 7. **Products.md** — @products
-   - Depends on: Company.md + Industry.md + Competition.md
+   - Depends on: Company.md + Industry.md + Competition.md (Goal 4)
 
-### Goal 7 — Downstream (2 agents, parallel)
+### Goal 6 — Downstream (2 agents, parallel)
 8. **Technology.md** — @technology
-   - Depends on: Company.md + Products.md + Stakeholders.md
+   - Depends on: Company.md + Products.md (Goal 5) + Stakeholders.md (Goal 2)
 9. **Customers.md** — @customers
-   - Depends on: Company.md + Products.md
+   - Depends on: Company.md + Products.md (Goal 5)
+
+## YOUR DATA SOURCE PROTOCOL
+
+Every research pipeline MUST document data source quality. Use this framework:
+
+### Source Tiers (in order of reliability)
+
+| Tier | Source Type | Examples | Confidence |
+|---|---|---|---|
+| **Tier 1** | Audited financials | Annual reports, quarterly filings, audited statements | High |
+| **Tier 2** | Regulatory filings | SEBI disclosures, MCA records, exchange filings, patent databases | High |
+| **Tier 3** | Independent analyst reports | Chartis, Celent, IDC, Gartner, Forrester (NOT company-published summaries) | Medium |
+| **Tier 4** | Company-published data | Website, press releases, investor presentations, analyst recognitions | Low |
+| **Tier 5** | Industry commentary | Trade publications, analyst blogs, conference transcripts | Low |
+| **Tier 6** | Social media | X/Twitter, LinkedIn, YouTube, Glassdoor | Very Low (requires authentication; see below) |
+
+### Social Media Scraping — Known Limitations
+
+**Current tooling cannot reliably scrape social media platforms.** The following has been tested and confirmed:
+
+- **X/Twitter:** Requires authentication. Profiles resolve to unrelated accounts (e.g., @IntellectDesign resolves to a UK design studio, not Intellect Design Arena). Posts are behind login wall.
+- **YouTube:** Search renders but video results are not extractable via webfetch. No transcript or comment extraction.
+- **LinkedIn:** Returns 404 for company pages. Anti-scraping measures block programmatic access.
+- **Glassdoor:** Requires authentication. Reviews not extractable.
+
+**For future projects, social media analysis should be:**
+1. **Manual review** — Open platforms in browser, take screenshots, note key themes
+2. **Paid tools** — Brandwatch, Meltwater, Sprout Social, Hootsuite Analytics
+3. **API access** — Twitter API (paid), YouTube Data API, LinkedIn API (partner-only)
+4. **Explicitly documented** — If social media is NOT analyzed, state this in Company.md's Source Limitations section
+
+### Source Limitations Section
+
+**Every Company.md MUST include a "Source Limitations" section** at the top that explicitly states:
+- What sources WERE analyzed (with confidence levels)
+- What sources were NOT analyzed (and why)
+- Whether independent third-party sources (beyond company relationships) were consulted
+- Whether social media data was analyzed
+
+**Example:**
+> Independent third-party sources (news articles, analyst reports beyond company relationships, regulatory filings beyond SEBI disclosures) are thin. Social media data (X, YouTube, LinkedIn, Glassdoor) was NOT analyzed due to platform authentication requirements. Most data comes from the company's own website, investor presentations, and press releases. Claims that appear only on the company's website without independent corroboration carry Low confidence.
+
+---
 
 ## YOUR RULES (from rules/)
 

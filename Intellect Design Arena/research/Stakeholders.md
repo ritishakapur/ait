@@ -378,6 +378,8 @@ This culture is not just a methodology — it is Intellect's differentiator. "We
 
 ## 6. Investors & Shareholders (Who Funds)
 
+> **Source Limitation:** Board composition, investor details, and management council information sourced from Intellect's website and investor presentations. Independent verification is limited to publicly filed SEBI disclosures. No independent news analysis or third-party investor intelligence was conducted.
+
 ### 6.1 Promoters / Founders
 
 | Person | Role | Notes |
@@ -397,6 +399,16 @@ This culture is not just a methodology — it is Intellect's differentiator. "We
 | D. Shivakumar | Independent Director (Chairman, Risk Management Committee) |
 | Vijaya Sampath | Independent Director (Chairperson, Stakeholders' Relationship Committee) |
 | Arun Shekhar Aran | Independent Director |
+
+### 6.2a Board Governance Depth
+
+> **Analysis:** Intellect has **4 independent directors out of 7 total board members (57%)**. This is above the SEBI minimum of 50% for listed companies with public offers. However:
+>
+> - **Geographic gap:** All independent directors appear to be India-based. For a company claiming operations in 61+ countries with customers at JPMorgan, Barclays, and BNP Paribas, the board lacks geographic diversity. This limits perspective on international market dynamics.
+> - **Functional gap:** No independent director appears to have explicit technology, cybersecurity, or international banking expertise based on publicly available information.
+> - **Founder dominance:** Arun Jain (founder, CMD) and Anil Kumar Verma (ED) are the only executive directors. The founder's influence extends beyond the boardroom through the School of Design Thinking, Ullas Trust, and Mission Samriddhi — creating a "soft power" structure that may reduce independent board influence.
+>
+> **Bottom line:** Board composition meets regulatory minimums but is thin on international perspective and functional diversity — a governance gap for a company with global ambitions.
 
 ### 6.3 Management Council
 

@@ -7,9 +7,25 @@
 **Where Intellect fits on the value chain:** Intellect Design Arena sells proprietary banking software platforms (core banking, lending, payments, wealth, treasury, insurance, trade finance) to financial institutions globally. It sits at the **software vendor** layer — upstream of implementation services and downstream of the end-user (the bank).
 
 **TAM / SAM framing:**
-- **TAM (Total Addressable Market):** Global banking software market — estimated at **USD 110–130 billion** by 2025, growing at ~10–12% CAGR through 2030 [1] [2]
-- **SAM (Serviceable Addressable Market):** Core banking + lending + payments software — estimated at **USD 25–35 billion** globally by 2025 [3] [4]
-- **SOM (Serviceable Obtainable Market):** Mid-tier and emerging market banks in APAC, Middle East, and Commonwealth nations — estimated at **USD 2–4 billion** for a player like Intellect with its current footprint [5] [6]
+- **TAM (Total Addressable Market):** Global banking software market — estimated at **USD 110–130 billion** by 2025, growing at ~10–12% CAGR through 2030 [Low — synthesized from Grand View Research 2024 and Fortune Business Insights 2024; different definitions of "banking software" across sources]
+- **SAM (Serviceable Addressable Market):** Core banking + lending + payments software — estimated at **USD 25–35 billion** globally by 2025 [Low — synthesized from MarketsandMarkets Core Banking Solutions Report and Mordor Intelligence 2024; no single authoritative source publishes this exact segmentation]
+- **SOM (Serviceable Obtainable Market):** Mid-tier and emerging market banks in APAC, Middle East, and Commonwealth nations — estimated at **USD 2–4 billion** for a player like Intellect with its current footprint [Very Low — synthesized from Celent, Datos, and IBS Intelligence commentary; directional estimate only]
+
+**Figure Derivation Note:**
+- Grand View Research defines "banking software" broadly (includes payments, wealth, risk, compliance software) — this is the upper end of the TAM range
+- Fortune Business Insights uses a narrower definition (core banking + lending focused) — this is the lower end of the TAM range
+- MarketsandMarkets segments "core banking solutions" separately from "digital banking platforms" and "open banking solutions" — SAM combines the first two categories
+- The wide range (USD 110–130B TAM) reflects these definitional differences, not measurement error
+
+---
+
+## ⚠️ Circularity Warning — IBS Intelligence Data
+
+**IBSi (IBS Intelligence) Sales League Table data is used as primary input throughout this file** (Sections 2, 3, 4, 8). Section 9.6 flags that **IBS Intelligence has close ties to Intellect Design Arena**. 
+
+**What this means:** IBSi deal volume rankings should be treated as **directional momentum signals**, not independent analyst assessments. They indicate Intellect's market activity and growth trajectory, but the methodology and data sources are not fully transparent. Use these rankings to understand Intellect's relative position among competitors, not as ground truth.
+
+**Not affected:** Chartis Research, Celent, IDC MarketScape, Datos Insights, and Forrester recognitions are from independent analyst firms (though Intellect has published analyst relationships with several of them).
 
 ---
 
@@ -82,7 +98,7 @@ The global core banking software market is **oligopolistic at the top tier** but
 | **Regional Specialists** | Infosys (India), Wipro (India), TCS (India), HCL, EdgeVerve | Strong in home markets; growing globally |
 | **Cloud-Native Niche** | Mambu, Thought Machine, Backbase, Apiture | Built-from-scratch cloud platforms; gaining traction with neo-banks and challenger banks |
 
-**Evidence of oligopoly at top tier:** Temenos alone was ranked #1 in **15 categories** in the 2026 IBS Intelligence Sales League Table, including Core Banking for the **21st consecutive year** [7]. Finastra serves **7,000+ global financial institutions** and moves **$7 trillion in transactions daily** [8]. Together, Temenos and Finastra are estimated to hold **~35–40% of the global core banking market** by revenue [9] [10].
+**Evidence of oligopoly at top tier:** Temenos alone was ranked #1 in **15 categories** in the 2026 IBS Intelligence Sales League Table, including Core Banking for the **21st consecutive year** [Low — Temenos press release (June 16, 2026) regarding IBS Intelligence league table; IBS Intelligence has close ties to Intellect Design Arena, so this is directional, not independently verified]. Finastra serves **7,000+ global financial institutions** and moves **$7 trillion in transactions daily** [Medium — from finastra.com, company-published but corroborated by multiple industry sources]. Together, Temenos and Finastra are estimated to hold **~35–40% of the global core banking market** by revenue [Low — synthesized from IBS Intelligence Sales League Table 2026 and company annual reports (Temenos: SIX: TEMN; Finastra: private, Vista Equity Partners)].
 
 **Evidence of fragmentation in niches:** In Islamic banking, NBFCs, central banking, and custody/asset servicing, no single vendor dominates — Intellect, Temenos, Finastra, and others compete across these segments with varying success.
 
@@ -103,12 +119,12 @@ The market is in a **phase of rapid expansion** driven by a once-in-a-generation
 
 | Metric | Value | Source |
 |---|---|---|
-| Global banking software market size (2025) | USD 110–130 billion | [1] [2] |
-| Core banking + lending + payments SAM | USD 25–35 billion | [3] [4] |
-| Global CAGR (banking software) | 10–12% | [1] [2] |
-| Digital Banking Platforms market (2026) | USD 13.9 billion, 11.3% CAGR | MarketsandMarkets [11] |
-| Open Banking Solutions market (2028) | USD 11.7 billion, 16.0% CAGR | MarketsandMarkets [12] |
-| India banking IT spend (2025) | ~USD 5–6 billion, growing 15–18% | [13] [14] |
+| Global banking software market size (2025) | USD 110–130 billion [Low] | Grand View Research 2024; Fortune Business Insights 2024 |
+| Core banking + lending + payments SAM | USD 25–35 billion [Low] | MarketsandMarkets Core Banking Solutions Report; Mordor Intelligence 2024 |
+| Global CAGR (banking software) | 10–12% [Low] | Grand View Research 2024; Fortune Business Insights 2024 |
+| Digital Banking Platforms market (2026) | USD 13.9 billion, 11.3% CAGR [Medium] | MarketsandMarkets, September 2021 |
+| Open Banking Solutions market (2028) | USD 11.7 billion, 16.0% CAGR [Medium] | MarketsandMarkets, March 2024 |
+| India banking IT spend (2025) | ~USD 5–6 billion, growing 15–18% [Low] | Celent commentary; Datos insights; RBI technology guidelines |
 
 **Regional growth rates (estimates):**
 - **APAC:** 13–16% CAGR — fastest growing, driven by India, Southeast Asia, and China's banking modernization

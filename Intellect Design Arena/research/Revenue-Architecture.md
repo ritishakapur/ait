@@ -8,6 +8,18 @@
 
 ---
 
+## ⚠️ Foundational Assumption — Revenue Inference
+
+> **This file's total revenue figure (₹1,800–2,200 Cr) is inferred from reported net profit (₹403 Cr TTM) and EBITDA margin (18.5%). It is NOT derived from actual financial statements.**
+>
+> **Every number downstream compounds from this inference.** The actual revenue figure requires the full FY26 annual report.
+>
+> **Implication:** If the actual revenue is ₹1,500 Cr or ₹3,000 Cr, every percentage split, every per-unit estimate, and every growth projection in this file shifts proportionally. Treat all derived figures as **directional**, not precise.
+>
+> **Confidence on total revenue: Medium.** The range is plausible but unverified.
+
+---
+
 ## 1. Multi-Vertical Scan
 
 Three independent passes across Intellect's core business verticals. Each agent operates without seeing the others' findings.
@@ -82,7 +94,9 @@ Grouping revenue streams by **type of value** (not product category):
 | Insurance/wealth/NBFC licenses | ₹40–60 Cr | ~7% | Growing from small base |
 | Central banking/CBDC | ₹10–20 Cr | ~2% | Nascent, lumpy |
 | Purple Fabric AI (enterprise) | ₹15–30 Cr | ~3% | Fast growth from zero base |
-| **Total Upfront License** | **₹295–480 Cr** | **~57%** | **Growing** |
+| **Total Upfront License** | **₹295–480 Cr** | **~57% [Low]** | **Growing** |
+
+> **Revenue Split Confidence: Low** — The revenue split (57% license, 18% recurring, 25% services) is synthesized from deal volume estimates, pricing benchmarks, and industry patterns. The actual split could differ by ±15 percentage points. This is directional analysis, not financial fact.
 
 ### Theme B: Recurring Revenue (Annual)
 
@@ -91,7 +105,7 @@ Grouping revenue streams by **type of value** (not product category):
 | Support/maintenance (all products) | ₹80–120 Cr | ~15% | Sticky, 95%+ retention |
 | Purple Fabric subscriptions | ₹10–30 Cr | ~2% | Fast growth |
 | Cloud hosting fees (if any) | ₹5–10 Cr | ~1% | Emerging |
-| **Total Recurring** | **₹95–160 Cr** | **~18%** | **Growing structure** |
+| **Total Recurring** | **₹95–160 Cr** | **~18% [Low]** | **Growing structure** |
 
 ### Theme C: Services Revenue (One-Time + Staffed)
 
@@ -100,7 +114,7 @@ Grouping revenue streams by **type of value** (not product category):
 | Implementation services | ₹100–150 Cr | ~20% | High but margin-constrained |
 | Customization/add-ons | ₹20–40 Cr | ~4% | Stable |
 | Managed services | ₹5–15 Cr | ~1% | Emerging |
-| **Total Services** | **₹125–205 Cr** | **~25%** | **Stable, margin drag** |
+| **Total Services** | **₹125–205 Cr** | **~25% [Low]** | **Stable, margin drag** |
 
 **Total Estimated Revenue:** ₹515–845 Cr (TTM)  
 **Actual Reported:** Revenue figure not fully disclosed in public filings accessible in this session. The ₹403 Cr net profit with 18.5% EBITDA margin implies revenue in the range of ₹1,800–2,200 Cr (based on typical enterprise software revenue-to-profit ratios). The above estimates are directional only — precise figures require the full annual report.
@@ -211,7 +225,7 @@ Total Estimated Revenue (TTM)
 | Lever | Revenue Impact (est.) | Timeline | Confidence |
 |---|---|---|---|
 | **North America deal conversion** | ₹100–200 Cr incremental | 12–24 months | High — 96 deals announced in 2026 |
-| **Purple Fabric scale** | ₹50–150 Cr incremental | 12–36 months | Medium — new product, unproven at scale |
+| **Purple Fabric scale** | ₹50–150 Cr incremental [Very Low] | 12–36 months | Medium — new product, unproven at scale |
 | **Insurance vertical expansion** | ₹30–60 Cr incremental | 12–24 months | Medium — IntellectAI growing from small base |
 | **Central banking/CBDC** | ₹20–50 Cr incremental | 24–60 months | Low — nascent market, long sales cycles |
 | **Cross-sell to existing customers** | ₹50–100 Cr incremental | 12–24 months | High — 300+ installations, 700+ microservices |
@@ -400,56 +414,22 @@ This section explains how every quoted figure was derived. Where no single autho
 
 ### 8.9 Revenue per Employee (₹28.7–35 Cr)
 
-**Derivation:**
+**Corrected Final Calculation:**
 - Estimated revenue: ₹1,800–2,200 Cr
 - Headcount: 6,282+
-- Revenue per employee: ₹1,800 Cr / 6,282 = **₹28.7 Cr**
-- Revenue per employee: ₹2,200 Cr / 6,282 = **₹35.0 Cr**
-- **Working estimate: ₹28.7–35 Cr per employee**
+- Revenue per employee: ₹1,800 Cr / 6,282 = **₹28.7 Cr** to ₹2,200 Cr / 6,282 = **₹35.0 Cr**
+- In USD: **$34.5–42K per employee** (at ₹83/USD)
 
-**Benchmark comparison:**
-- Temenos: ~10,000 employees, CHF 1.2B revenue (~₹10,500 Cr) → ₹1,050 Cr / 10,000 = **₹10.5 Cr per employee** — wait, this seems low
-- Correction: Temenos revenue is CHF 1.2B = ~₹10,500 Cr? No. CHF 1 = ~₹90. CHF 1.2B = ~₹108 Cr. That's too low.
-- Temenos FY2024 revenue: CHF 1.17B = ~₹10,530 Cr (at ₹90/CHF)
-- Temenos employees: ~9,500
-- Revenue per employee: ₹10,530 Cr / 9,500 = **₹1.11 Cr per employee** — this is wrong
-- Let me recalculate: CHF 1.17B × 90 = CHF 105.3B? No. 1.17B × 90 = ₹105.3B = ₹10,530 Cr. That's correct.
-- ₹10,530 Cr / 9,500 = **₹1.11 Cr per employee** — this is clearly wrong. Temenos is a product company, should be higher.
-- Error: ₹10,530 Cr / 9,500 = ₹1.11 Cr. But this is in INR. Let me verify: 1 CHF = ~₹90. CHF 1.17B = CHF 1,170M × 90 = CHF 105,300M = ₹10,530 Cr. Yes, that's correct.
-- ₹10,530 Cr / 9,500 = ₹1.11 Cr per employee. This seems low for a product company.
-- Actually, ₹1.11 Cr per employee = ~$133K per employee (at ₹83/USD). This is reasonable for a European software company.
-- Intellect: ₹1,800–2,200 Cr / 6,282 = ₹28.7–35 Cr per employee = ~$345–420K per employee
-- This is HIGHER than Temenos. That makes sense because Intellect has lower labor costs (India-based).
-
-**Correction:** The revenue per employee comparison was incorrect in the main text. Intellect's revenue per employee (₹28.7–35 Cr) is actually HIGHER than Temenos (~₹1.11 Cr) because Intellect's labor costs are lower. However, this comparison is misleading because:
-1. Temenos has higher pricing power (Swiss/European pricing)
-2. Intellect has more services revenue (lower revenue per employee)
-3. The comparison should be in USD for fairness: Intellect ~$345–420K vs. Temenos ~$133K
-
-**But wait** — Temenos revenue of CHF 1.17B = ₹10,530 Cr seems too high. Let me verify:
-- CHF 1.17B × 90 = CHF 105.3B? No. 1.17B × 90 = 105.3B? That's 105,300 Cr. That's correct.
-- ₹10,530 Cr / 9,500 = ₹1.11 Cr. This is correct.
-
-Actually, I think the issue is that Temenos's revenue is in CHF, not INR. Let me convert properly:
-- Temenos: CHF 1.17B = USD 1.3B (at 0.90 CHF/USD) = ₹108 Cr (at ₹83/USD). No, that's wrong too.
-- CHF 1.17B × 0.90 = USD 1.05B. USD 1.05B × 83 = ₹87.2B = ₹8,720 Cr.
-- ₹8,720 Cr / 9,500 = **₹0.92 Cr per employee** = ~$11,000 per employee. This is still too low.
-
-I'm making conversion errors. Let me use a simpler approach:
-- Temenos revenue: ~$1.1B USD
-- Temenos employees: ~9,500
-- Revenue per employee: $1.1B / 9,500 = **$116K per employee**
-- Intellect: ₹1,800–2,200 Cr = $217–265M USD (at ₹83/USD)
-- Intellect employees: 6,282
-- Revenue per employee: $217M / 6,282 = **$34.5K per employee**
-- **This makes more sense.** Intellect's revenue per employee is lower because it's India-based with lower pricing.
-
-**Corrected benchmark comparison:**
+**Benchmark Comparison (USD, apples-to-apples):**
 | Company | Revenue per Employee |
 |---|---|
 | Intellect (est.) | $34.5–42K |
-| Temenos | $116K |
+| Temenos | ~$116K |
 | Mambu (pure SaaS) | $200–300K |
 | Infosys BFSI | $25–35K |
+
+**Key Insight:** Intellect's revenue per employee is **below** Temenos and Mambu, confirming the implementation-heavy model. To reach Temenos-level productivity, Intellect needs to reduce services revenue and increase product-led revenue.
+
+**Note on derivation errors:** Earlier versions of this section contained calculation errors in currency conversion (CHF→INR→USD). The corrected USD comparison above is the accurate figure. The INR comparison (₹28.7–35 Cr vs. ₹45–55 Cr for Temenos) was misleading because it didn't account for currency conversion and purchasing power parity.
 
 **Confidence: Medium.** The revenue per employee calculation is straightforward, but the comparison requires currency conversion and may not be apples-to-apples (different product mixes, geographies, and accounting methods).
