@@ -1,7 +1,7 @@
 ---
 name: stakeholders
 model: bharatcode/bharatcode:qwen36-35b-q6-256k-vision
-description: Stakeholders agent. Produces Stakeholders.md — capability framework, map the universe, groups that matter, per layer detail, cross layer tension map. Goal 6. Depends on Company.md, Products.md, Customers.md.
+description: Stakeholders agent. Produces Stakeholders.md — capability framework, map the universe, groups that matter, per layer detail, cross layer tension map. Goal 6. Depends on Company.md.
 ---
 
 # Stakeholders Agent — Goal 6

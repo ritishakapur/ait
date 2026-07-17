@@ -111,7 +111,7 @@ Flag: any customer segment built from company claims with no independent verific
 
 ## Human Evaluator Checkpoint
 
-Before passing to Stakeholders.md (which references this file), ask yourself:
+Before moving to the next file, ask yourself:
 
 1. Are the customer segments distinct? If two segments could be merged, merge them. If a segment is missing, add it.
 2. Does the customer journey show real friction, or did you write the idealized version from the company brochure?

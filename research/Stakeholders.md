@@ -2,7 +2,7 @@
 
 **What it is:** Every person or group the company interacts with, mapped by their role in the system, not by org chart. This includes customers (already detailed in Customers.md, which this file should reference rather than rebuild) plus everyone else: employees, informal power users, regulators, suppliers, partners, capital providers. This is the human dynamics layer that reveals what actually drives or breaks the business.
 
-**Depends on:** Company.md, Products.md, Customers.md.
+**Depends on:** Company.md.
 
 **Note:** This file holds the master definition of the capability framework referenced by Products.md, Competition.md, and Customers.md. Define it once here. The other files should link back rather than redefine it.
 
